@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#173b3b">
+<meta name="description" content="研究の目的、データの種類、対応の有無から統計手法の候補を探す簡易ガイド。確認事項と根拠をコンパクトにまとめました。">
+<title>統計手法ナビ — 目的とデータから選ぶ</title>
+<style>/*__STYLES__*/</style>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#select" aria-label="統計手法ナビ ホーム">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M7 23V16M16 23V9M25 23V13" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="7" cy="12" r="2" fill="currentColor"/><circle cx="25" cy="8" r="2" fill="currentColor"/></svg></span>
+      <span>統計手法ナビ<span class="brand-en">STATISTICAL METHOD GUIDE</span></span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="表示するページ">
+      <button id="tab-select" role="tab" aria-selected="true" aria-controls="panel-select" data-tab="select" class="tab active">手法を選ぶ</button>
+      <button id="tab-table" role="tab" aria-selected="false" aria-controls="panel-table" data-tab="table" class="tab" tabindex="-1">早見表</button>
+      <button id="tab-assumptions" role="tab" aria-selected="false" aria-controls="panel-assumptions" data-tab="assumptions" class="tab" tabindex="-1">前提を確認</button>
+      <button id="tab-about" role="tab" aria-selected="false" aria-controls="panel-about" data-tab="about" class="tab" tabindex="-1">考え方と出典</button>
+    </nav>
+    <button class="button button-quiet download-button" id="download-app" type="button"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none"><path d="M10 3v9m-3-3 3 3 3-3M4 12v4h12v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>HTMLを保存</span></button>
+  </div>
+</header>
+
+<main id="main" class="container">
+  <section id="panel-select" role="tabpanel" aria-labelledby="tab-select">
+    <div class="hero">
+      <div><p class="eyebrow">RESEARCH, ONE QUESTION AT A TIME</p><h1>どの統計手法を使う？</h1><p class="hero-description">目的とデータの形から、候補となる手法と確認ポイントを見つけましょう。</p></div>
+      <div class="hero-note"><span class="note-line"></span><p>「何を調べたいか」から<br><strong>ひとつずつ選ぶ。</strong></p></div>
+    </div>
+
+    <section class="goal-section" aria-labelledby="goal-heading">
+      <div class="section-heading"><h2 id="goal-heading"><span class="step-number">01</span>何を調べたいですか？</h2><button type="button" id="reset" class="text-button" hidden>選び直す <span aria-hidden="true">↺</span></button></div>
+      <div id="goals" class="goal-grid"></div>
+    </section>
+
+    <div class="guide-layout">
+      <div class="question-column">
+        <div id="questions" aria-label="データの条件"></div>
+        <section class="examples-section" aria-labelledby="example-heading"><p class="mini-heading" id="example-heading">具体例から試す</p><div id="examples" class="example-list"></div></section>
+        <div class="quiet-note"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="M7 14h6M8 17h4M6.3 11.7a6 6 0 1 1 7.4 0c-.9.7-1.2 1.4-1.2 2.3h-5c0-.9-.3-1.6-1.2-2.3Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><p>症例数や正規性検定のp値だけで、手法を決めない構成です。<button class="inline-help" type="button" data-help="">分布・前提の確認方法を見る →</button></p></div>
+      </div>
+      <aside class="result-column" aria-label="選択した条件に合う候補">
+        <div id="result"></div>
+      </aside>
+    </div>
+    <button id="mobile-result" class="mobile-result" type="button" hidden>候補を見る <span aria-hidden="true">↓</span></button>
+  </section>
+
+  <section id="panel-table" role="tabpanel" aria-labelledby="tab-table" hidden>
+    <div class="hero compact"><div><p class="eyebrow">AT A GLANCE</p><h1>統計手法の早見表</h1><p class="hero-description">元の表の見通しのよさに、選ぶときの確認事項を加えました。</p></div></div>
+    <div class="table-toolbar"><div id="table-filters" class="filter-list" aria-label="目的で絞り込み"></div><label class="search"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="table-search" type="search" placeholder="手法・目的で検索" aria-label="早見表を検索"></label></div>
+    <p class="table-caption" id="table-caption" aria-live="polite"></p>
+    <div class="table-wrap"><table><thead><tr><th scope="col">目的・データ</th><th scope="col">比較・測定の形</th><th scope="col">候補となる手法</th><th scope="col">確認するポイント</th><th scope="col"><span class="sr-only">詳細</span></th></tr></thead><tbody id="quick-rows"></tbody></table></div>
+    <div class="table-note"><strong>症例数は一律の基準で判定しません。</strong><span>「検定の適用条件」と「必要な検出力・推定精度」を分けて考えます。各行の「詳しく」で、条件と出典を確認できます。</span></div>
+  </section>
+
+  <section id="panel-assumptions" role="tabpanel" aria-labelledby="tab-assumptions" hidden>
+    <div class="hero compact assumptions-hero"><div><p class="eyebrow">CHECK THE ASSUMPTIONS</p><h1>分布・前提の確認</h1><p class="hero-description">使う統計ソフトで、何をどう確認するか。3つの手順で整理しました。</p></div><button type="button" class="button button-quiet" data-return-to-guide>手法選びに戻る <span aria-hidden="true">↗</span></button></div>
+    <div class="help-intro"><span class="help-intro-mark" aria-hidden="true">!</span><div><strong>正規性のp値だけで、手法を決めない。</strong><p>図・外れ値・データの対応を一緒に確認します。このページは、確認する対象と方法を案内します。</p></div></div>
+    <p class="help-context" id="assumption-context" hidden></p>
+
+    <section class="help-section" aria-labelledby="help-target-heading">
+      <h2 class="help-section-heading" id="help-target-heading"><span class="step-number">01</span>何の分布を見る？</h2>
+      <div class="help-target-grid">
+        <article class="help-target" id="assumption-groups" tabindex="-1"><p class="help-card-label">独立した群の平均比較</p><h3>群ごとの値</h3><p>群を分けて、値の分布とばらつきを見ます。平均の異なる群をまとめた分布だけで判断しません。</p><div class="help-how"><strong>準備するもの</strong><p>測定値と、どの群かを示す情報。ソフトで群別の図を表示します。</p></div></article>
+        <article class="help-target" id="assumption-paired" tabindex="-1"><p class="help-card-label">同じ人の前後の平均比較</p><h3>各人の「後 − 前」</h3><p>対象の対応をそろえ、変化量の列を作ります。その列の分布や外れ値を確認します。</p><div class="help-how"><strong>ここを見る</strong><p>対応のあるt検定では、<b>個人ごとの差の分布</b>を確認します。</p></div><a class="help-reference" href="https://www.itl.nist.gov/div898/handbook/prc/section3/prc311.htm" target="_blank" rel="noopener noreferrer">対応のある解析について ↗</a></article>
+        <article class="help-target" id="assumption-model" tabindex="-1"><p class="help-card-label">線形回帰・分散分析</p><h3>モデルの残差</h3><p>モデルを当てはめ、「実測値 − 予測値」の残差を出します。残差の図で、誤差についての仮定を確認します。</p><div class="help-how"><strong>ここを見る</strong><p>説明変数すべての正規性が必要なわけではありません。反復測定分散分析では球面性、混合モデルでは設定した相関構造なども確認します。</p></div><a class="help-reference" href="https://www.itl.nist.gov/div898/handbook/pri/section2/pri24.htm" target="_blank" rel="noopener noreferrer">残差の確認方法 ↗</a></article>
+      </div>
+    </section>
+
+    <section class="help-section" aria-labelledby="help-plots-heading">
+      <h2 class="help-section-heading" id="help-plots-heading"><span class="step-number">02</span>統計ソフトで、図を表示する</h2>
+      <p class="help-section-lead">確認する列を選び、次の機能名を探します。群の比較では群別、前後比較では差の列を指定します。</p>
+      <div class="help-visual-grid">
+        <article class="help-visual"><span class="help-visual-label">分布の形を見る</span><h3>ヒストグラム・箱ひげ図</h3><p>左右の偏り、極端な値、群ごとのばらつきを確認します。少数例では個々の点も表示します。</p><p class="help-small-note">箱ひげ図で外れた点も、自動的には削除しません。入力や測定の経緯を確かめます。</p></article>
+        <article class="help-visual"><span class="help-visual-label">正規分布からのずれを見る</span><h3>正規Q–Qプロット</h3><p>点がおおむね直線に沿うかを見ます。大きな曲がりや端のずれは、歪みや裾の違いを考える手がかりです。</p><a class="help-reference" href="https://www.itl.nist.gov/div898/handbook/eda/section3/normprpl.htm" target="_blank" rel="noopener noreferrer">図の見方を確認する ↗</a></article>
+        <article class="help-visual"><span class="help-visual-label">回帰・分散分析の場合</span><h3>残差診断</h3><p>残差のQ–Qプロットに加え、残差と予測値の散布図を見ます。曲がりや扇状の広がりがあれば、関係の形や分散も見直します。</p><p class="help-small-note">正規性だけでなく、独立性やモデルの形も確認します。</p></article>
+      </div>
+    </section>
+
+    <section class="help-section" aria-labelledby="help-reading-heading">
+      <h2 class="help-section-heading" id="help-reading-heading"><span class="step-number">03</span>図と検定を合わせて読む</h2>
+      <div class="help-shapiro"><div class="help-shapiro-heading"><h3>Shapiro–Wilk検定を使う場合</h3><p>有意水準を0.05に決めた場合の読み方です。ソフトの説明で適用条件も確認します。</p></div><div class="help-p-grid"><div><span class="help-p-label">p ≥ 0.05</span><strong>正規分布だと証明されたわけではありません。</strong><p>正規性を否定する十分な証拠が得られなかった、という結果です。図や例数も一緒に確認します。</p></div><div><span class="help-p-label">p &lt; 0.05</span><strong>正規分布からのずれが示唆されます。</strong><p>直ちにt検定が不可と決めず、ずれの程度、外れ値、例数、比較したい量を合わせて検討します。</p></div></div><a class="help-reference" href="https://docs.scipy.org/doc/scipy/tutorial/stats/hypothesis_shapiro.html" target="_blank" rel="noopener noreferrer">検定結果の読み方の根拠 ↗</a></div>
+      <div class="help-more">
+        <details class="detail-block help-detail"><summary>症例数とWelch検定の注意点</summary><div class="detail-content"><p>「30例以上」でも、元の分布が正規分布になるわけではありません。症例数だけで適否を決めず、分布や外れ値、必要な推定精度を確認します。</p><p>Welch検定は等分散を仮定しない方法ですが、強い歪みや外れ値を自動的に解決するものではありません。</p><a class="help-reference" href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/t.test.html" target="_blank" rel="noopener noreferrer">Welch検定の説明 ↗</a></div></details>
+        <details class="detail-block help-detail" id="assumption-ranks" tabindex="-1"><summary>順位法・相関で確認すること</summary><div class="detail-content"><div class="help-specific"><strong>順位による比較</strong><p>Wilcoxon符号順位検定では、差の大きさを扱える尺度か、差の分布が対称かを確認します。順序尺度の前後比較では、符号検定も候補です。</p><p>Mann–Whitney検定を、いつでも中央値の差の検定と解釈することはできません。値の順位、分布の形、調べたい量を確認します。</p><a class="help-reference" href="https://search.r-project.org/R/refmans/stats/html/wilcox.test.html" target="_blank" rel="noopener noreferrer">順位検定の前提と解釈 ↗</a></div><div class="help-specific" id="assumption-association" tabindex="-1"><strong>2変数の関連</strong><p>まず2変数の散布図で、直線的か、単調な関係か、外れ値があるかを見ます。Pearsonの通常のp値・信頼区間には分布の仮定も関わります。</p><p>Spearmanでも関係の形や同順位、観測の独立性を確認します。同じ対象の反復測定を、独立した点としてまとめません。</p><a class="help-reference" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html" target="_blank" rel="noopener noreferrer">相関係数と推論の条件 ↗</a></div></div></details>
+        <details class="detail-block help-detail" id="assumption-other" tabindex="-1"><summary>割合・生存時間・ROCで確認すること</summary><div class="detail-content"><p>これらの解析は、正規性を共通の入口にして選びません。候補となる手法の前提を確認します。</p><dl class="help-dl"><dt>割合・カテゴリー</dt><dd>観測の独立性や対応を確認します。カイ二乗検定では期待度数、McNemar検定では不一致ペアを見ます。二項ロジスティック回帰では分離や因子と対数オッズの関係など、モデルに合う前提を確認します。</dd><dt>イベントまでの時間</dt><dd>追跡時間、イベント、打ち切りを確認します。Coxモデルでは比例ハザード性も確認します。</dd><dt>検査の判別能・ROC</dt><dd>基準となる病気あり・なし、検査値の向き、AUCの信頼区間を確認します。2つのAUCを比べる場合は、対象の対応も確認します。</dd></dl><p>各手法の詳しい条件と参考資料は、選択した候補の「確認すること」「根拠を読む」から確認できます。</p></div></details>
+      </div>
+    </section>
+    <div class="help-bottom"><p>図・要約値・比較したい量をそろえて、候補の前提を確かめましょう。</p><button type="button" class="button" data-return-to-guide>手法選びに戻る <span aria-hidden="true">→</span></button></div>
+  </section>
+
+  <section id="panel-about" role="tabpanel" aria-labelledby="tab-about" hidden>
+    <div class="hero compact"><div><p class="eyebrow">HOW TO CHOOSE</p><h1>選ぶ前に、大切な3つのこと。</h1><p class="hero-description">簡潔な選択ガイドにも、残しておきたい考え方があります。</p></div></div>
+    <div class="principle-grid">
+      <article class="principle"><span class="principle-number">01</span><h2>まず、答えたい問いを決める</h2><p>平均値の差、順位による大小、割合、時間経過では、調べていることが異なります。平均を比べる方法と順位法は、完全に同じ問いの代替とは限りません。</p></article>
+      <article class="principle"><span class="principle-number">02</span><h2>分布と、データのつながりを見る</h2><p>正規性検定のp値だけで切り替えず、図や外れ値も確認します。前後比較では変化量、回帰では残差を見ます。同じ人の測定を独立した観測として扱わないことも大切です。</p><button type="button" class="inline-help" data-help="">具体的な確認方法を見る →</button></article>
+      <article class="principle"><span class="principle-number">03</span><h2>症例数は、研究の目的から設計する</h2><p>「30例以上」「1因子10イベント」は万能な基準ではありません。検出したい差、ばらつき、イベント数、推定する係数の数、求める精度から検討します。</p></article>
+    </div>
+    <section class="about-block"><div class="about-title"><p class="eyebrow">READING THE RESULTS</p><h2>結果の見方</h2></div><div class="about-copy"><p><strong>表示されるのは、条件に合う候補です。</strong>「確認すること」で前提を確かめ、必要に応じて「条件によっては」に示す方法も検討してください。</p><p>このアプリは手法の選択を助けるガイドです。データの解析やp値の計算は行いません。症例数を入力して適否を自動判定する機能も設けていません。</p><p>調整した関連の推定と、個人の予測モデル作成では、因子の選び方や評価の目的が異なります。群と時点を同時に比較する研究や、複雑な反復・集団構造は、その構造を扱うモデルへ進みます。</p></div></section>
+    <section class="source-section" aria-labelledby="source-heading"><div class="about-title"><p class="eyebrow">SOURCES</p><h2 id="source-heading">参考資料</h2><p>公式資料・方法論論文へのリンク</p></div><div id="all-sources" class="source-list"></div></section>
+  </section>
+</main>
+<footer class="site-footer container"><span>統計手法ナビ <span class="footer-version">v1.1</span></span><span>目的を選ぶ。条件を確かめる。</span></footer>
+<div id="status" class="toast" role="status" aria-live="polite"></div>
+<noscript><div class="noscript">この選択ガイドにはJavaScriptが必要です。ブラウザのJavaScriptを有効にしてご利用ください。</div></noscript>
+<script>/*__GUIDE__*/</script>
+<script>/*__UI__*/</script>
+</body>
+</html>
