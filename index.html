@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#173b3b">
+<meta name="description" content="研究の目的、データの種類、対応の有無から統計手法の候補を探す簡易ガイド。確認事項と根拠をコンパクトにまとめました。">
+<title>統計手法ナビ — 目的とデータから選ぶ</title>
+<style>:root{--ink:#182c2e;--muted:#6d7c7c;--green:#22665f;--green-deep:#173f3b;--green-soft:#eaf3ed;--line:#dce4de;--paper:#f7f8f4;--white:#fff;--sand:#f4eee1;--radius:18px;--shadow:0 8px 30px rgba(25,49,39,.045);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;font-size:14px;line-height:1.75}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:var(--green);text-decoration-thickness:1px;text-underline-offset:3px}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #92b8a5;outline-offset:4px}button:disabled{cursor:default}h1,h2,h3,p{margin:0}button svg{width:18px;height:18px;flex-shrink:0}button{color:inherit}button:disabled{opacity:.55}[hidden]{display:none!important}.container{width:min(1240px,calc(100% - 64px));margin:auto}.site-header{position:sticky;top:0;background:rgba(247,248,244,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:30}.header-inner{width:min(1352px,calc(100% - 64px));min-height:86px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);font-size:18px;letter-spacing:.06em;font-weight:700;line-height:1.4;white-space:nowrap}.brand-mark{width:42px;height:42px;border-radius:12px;background:var(--green-deep);color:#cce1b6;display:grid;place-items:center}.brand-mark svg{width:29px;height:29px}.brand-en{display:block;font-size:8px;font-weight:600;letter-spacing:.16em;color:var(--muted);margin-top:5px}.tabs{display:flex;gap:6px;align-self:stretch;align-items:stretch}.tab{border:0;background:none;padding:0 18px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}.tab.active{color:var(--green);border-bottom-color:var(--green)}.tab:hover{color:var(--ink);background:rgba(34,102,95,.035)}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:9px;padding:10px 15px;border:1px solid var(--line);background:white;font-size:12px;font-weight:600;line-height:1.5;text-decoration:none;transition:background .15s,border-color .15s}.button:hover{background:var(--green-soft);border-color:#bacfc0}.button-quiet{background:transparent}.hero{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:44px 0 34px}.eyebrow{font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--green);margin-bottom:11px}.hero h1{font-size:36px;letter-spacing:.035em;line-height:1.45;font-weight:700}.hero-description{margin-top:11px;color:var(--muted);font-size:14px}.hero-note{display:flex;align-items:center;gap:18px;font-size:12px;color:var(--muted);min-width:185px}.hero-note strong{font-weight:600;color:var(--green-deep)}.note-line{width:34px;height:1px;background:#99afa2}.compact{padding-bottom:30px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:17px;gap:12px}.section-heading h2{font-size:16px;font-weight:650;display:flex;align-items:center;gap:10px}.step-number{font-size:11px;letter-spacing:.03em;font-weight:700;color:var(--green);width:26px;height:26px;display:inline-grid;place-items:center;border:1px solid #b8cbbf;border-radius:50%;flex-shrink:0}.text-button{border:0;background:transparent;color:var(--muted);font-size:12px;padding:5px;white-space:nowrap}.text-button:hover{color:var(--green)}.text-button span{font-size:17px;margin-left:4px}.goal-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.goal-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:19px 17px 17px;border:1px solid var(--line);border-radius:14px;background:var(--white);min-height:144px;box-shadow:0 2px 2px rgba(20,50,30,.015);transition:background .15s,border-color .15s,transform .15s}.goal-card:hover{border-color:#8cab9a;transform:translateY(-2px)}.goal-card.selected{background:var(--green-deep);border-color:var(--green-deep);color:white}.goal-card .goal-icon{color:var(--green);height:34px;margin-bottom:9px}.goal-icon svg{width:25px;height:25px}.goal-card.selected .goal-icon{color:#cbe0ad}.goal-title{font-size:14px;font-weight:650;line-height:1.5}.goal-detail{font-size:11px;line-height:1.6;color:var(--muted);margin-top:7px}.goal-card.selected .goal-detail{color:#cfddd4}.selection-dot{position:absolute;width:17px;height:17px;border:1px solid #cdd9d1;border-radius:50%;right:15px;top:20px}.selected .selection-dot{background:#cbe0ad;border-color:#cbe0ad}.selected .selection-dot:after{content:"";position:absolute;width:6px;height:3px;border-left:1.7px solid #173f3b;border-bottom:1.7px solid #173f3b;transform:rotate(-45deg);top:5px;left:4px}.guide-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin:30px 0 48px;align-items:start}.question-column{min-width:0}.result-column{position:sticky;top:110px;min-width:0}#questions{scroll-margin-top:108px}.question{border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 12px;background:white;min-width:0;box-shadow:var(--shadow)}.question legend{float:left;width:100%;font-weight:650;font-size:16px;margin-bottom:6px;display:flex;gap:10px;align-items:flex-start}.question legend+.question-help{clear:both}.question-help{color:var(--muted);font-size:12px;padding:3px 0 17px;line-height:1.8}.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}.option{display:flex;position:relative;align-items:flex-start;gap:10px;background:#fff;border:1px solid #dfe5df;border-radius:10px;padding:13px 12px;cursor:pointer;transition:background .15s,border-color .15s;min-width:0}.option:hover{background:#f5f8f2;border-color:#aac1b1}.option.selected{border-color:#6a9680;background:#edf5eb}.option input{position:absolute;opacity:0;width:1px;height:1px}.option:has(input:focus-visible){outline:3px solid #92b8a5;outline-offset:3px}.radio-mark{margin-top:4px;display:block;width:15px;height:15px;border:1px solid #bccdc0;border-radius:50%;flex:0 0 15px;background:#fff}.option.selected .radio-mark{border:5px solid var(--green)}.option-text{min-width:0;line-height:1.6}.option-title{display:block;font-weight:600;font-size:12px}.option-detail{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.65}.options .option:last-child:nth-child(odd){grid-column:1/-1}.answered{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:15px 18px;background:white;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}.answered:hover{border-color:#adc3b3;background:#fcfdfb}.answered .step-number{background:var(--green-soft);border-color:transparent}.answer-copy{flex:1;min-width:0}.answer-copy small{display:block;color:var(--muted);font-size:10px;line-height:1.6}.answer-copy strong{display:block;font-weight:600;font-size:13px;margin-top:2px}.change-label{color:var(--green);font-size:11px}.welcome{border:1px dashed #c8d5cb;border-radius:var(--radius);padding:27px 24px;margin-bottom:20px}.welcome h2{font-size:17px;font-weight:600;line-height:1.7}.welcome p{font-size:13px;color:var(--muted);margin-top:9px}.welcome-flow{display:flex;align-items:center;gap:14px;margin-top:22px}.welcome-flow span{display:flex;align-items:center;gap:6px;color:var(--green);font-size:11px}.welcome-flow b{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;font-size:10px;font-weight:600;background:#e4ece2}.welcome-flow i{height:1px;width:16px;background:#becfc2}.mini-heading{font-size:11px;font-weight:650;color:var(--muted);letter-spacing:.06em;margin:23px 0 11px}.example-list{display:flex;flex-wrap:wrap;gap:8px}.example-chip{display:flex;align-items:center;gap:6px;border:1px solid #d9e2d9;background:transparent;border-radius:30px;padding:7px 12px;color:#526b5e;font-size:11px;text-align:left}.example-chip:hover{background:#e9f0e5}.example-chip svg{width:13px;height:13px}.quiet-note{display:flex;align-items:flex-start;gap:10px;font-size:11px;line-height:1.85;color:var(--muted);padding:20px 3px 0}.quiet-note svg{width:20px;height:20px;flex-shrink:0;margin-top:1px;color:#799487}.result-card{border:1px solid #cfddd2;background:white;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);scroll-margin-top:110px}.result-top{padding:24px 25px 22px;background:#eff4eb;border-bottom:1px solid #dbe5d5}.result-kicker{display:flex;align-items:center;gap:8px;color:var(--green);font-size:11px;font-weight:650;letter-spacing:.04em;margin-bottom:13px}.result-kicker span{width:6px;height:6px;background:#699477;border-radius:50%}.result-title{font-size:25px;line-height:1.5;font-weight:650;letter-spacing:.015em}.result-english{font-size:11px;color:#718473;margin-top:5px;letter-spacing:.03em}.result-reason{font-size:13px;color:#486153;line-height:1.9;margin-top:13px}.result-body{padding:23px 25px}.result-label{font-weight:650;font-size:13px;display:flex;align-items:center;gap:8px;margin-bottom:13px}.result-label svg{width:16px;height:16px;color:var(--green)}.check-list{list-style:none;padding:0;margin:0}.check-list li{display:flex;gap:12px;margin-bottom:15px}.check-number{background:#f2f5f0;display:grid;place-items:center;flex:0 0 24px;height:24px;border-radius:7px;font-size:10px;font-weight:600;color:#789076;margin-top:1px}.check-text{flex:1}.check-text strong{display:block;font-size:12px;font-weight:650;line-height:1.65}.check-text p{color:var(--muted);font-size:12px;line-height:1.85;margin-top:3px}.report-block{padding:13px 15px;margin:20px 0;background:#f7f8f4;border-left:2px solid #b6c99f;border-radius:0 6px 6px 0}.report-block strong{display:block;font-size:11px;font-weight:600;color:#526b50;margin-bottom:4px}.report-block p{font-size:12px;line-height:1.85;color:#647260}.detail-block{border-top:1px solid #e8ece6}.detail-block summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600;padding:13px 0;gap:12px}.detail-block summary::-webkit-details-marker{display:none}.detail-block summary:after{content:"+";font-size:17px;font-weight:400;color:#7b8e7e}.detail-block[open] summary:after{content:"−"}.detail-content{font-size:12px;line-height:1.9;color:var(--muted);padding:0 0 15px}.detail-content strong{display:block;color:#48604e;margin-bottom:5px;font-size:12px}.result-sources{list-style:none;margin:0;padding:0}.result-sources li+li{margin-top:8px}.result-sources a{display:block;line-height:1.7;text-decoration:none;font-size:11px}.result-sources a:hover{text-decoration:underline}.result-actions{display:flex;align-items:center;gap:8px;border-top:1px solid #e7ece4;padding-top:18px;margin-top:2px}.result-actions .button{font-size:11px;padding:9px 12px}.candidate-list{display:grid;gap:9px;margin-top:18px}.candidate{border:1px solid #ccdbc7;background:#fff;border-radius:10px;padding:12px 14px}.candidate strong{display:block;font-size:13px;color:var(--green-deep)}.candidate p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.75}.empty-result{min-height:330px;border:1px solid var(--line);border-radius:var(--radius);background:#f0f3ec;display:flex;align-items:center;justify-content:center;text-align:center;padding:35px;position:relative;overflow:hidden}.empty-content{position:relative;z-index:1;max-width:290px}.empty-art{width:210px;height:90px;margin:0 auto 22px;color:#7f9d86}.empty-result h2{font-size:17px;font-weight:600;line-height:1.8}.empty-result p{font-size:12px;color:var(--muted);line-height:1.9;margin-top:9px}.empty-result:after{content:"";position:absolute;inset:0;background-image:radial-gradient(#97af97 1px,transparent 1px);background-size:14px 14px;opacity:.1;mask-image:linear-gradient(transparent 25%,#000)}.table-toolbar{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-bottom:16px}.filter-list{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:transparent;border-radius:24px;padding:7px 13px;font-size:11px;color:var(--muted)}.filter.active{background:var(--green-deep);border-color:var(--green-deep);color:white}.search{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:white;padding:9px 12px;border-radius:10px;min-width:230px}.search svg{width:17px;height:17px;color:#809084}.search input{border:0;outline:none;background:none;width:100%;font-size:12px;color:var(--ink);min-width:0}.search:focus-within{outline:2px solid #92b8a5;outline-offset:2px}.search input:focus-visible{outline:none}.table-caption{font-size:11px;color:var(--muted);margin-bottom:10px}.table-wrap{border:1px solid var(--line);border-radius:14px;overflow:auto;background:white}table{border-collapse:collapse;width:100%;min-width:840px;text-align:left}th{background:#eaf0e6;font-size:11px;letter-spacing:.02em;color:#52684f;font-weight:600;padding:15px 17px;border-bottom:1px solid #d9e3d3;white-space:nowrap}td{border-bottom:1px solid #e9ede6;padding:17px;font-size:12px;line-height:1.8;vertical-align:middle}tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#fafbf8}tbody tr:hover{background:#f1f5ed}td:first-child{width:19%;color:#687965}td:nth-child(2){width:21%;color:#687965}td:nth-child(3){width:26%;font-weight:600}td:nth-child(4){width:27%;font-size:11px;color:#74806f}td:last-child{width:7%;white-space:nowrap}.table-detail{border:0;background:none;color:var(--green);font-size:11px;font-weight:650;padding:7px 0}.table-detail:hover{text-decoration:underline}.no-results{text-align:center;color:var(--muted);padding:42px}.table-note{display:flex;gap:25px;padding:23px 4px 40px;font-size:12px;line-height:1.9;color:var(--muted)}.table-note strong{font-weight:600;color:#4d6852;white-space:nowrap}.principle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:44px}.principle{border:1px solid var(--line);border-radius:var(--radius);background:white;padding:25px}.principle-number{display:inline-block;font-size:22px;line-height:1;font-weight:500;color:#9bad92;margin-bottom:20px}.principle h2{font-size:16px;font-weight:600;line-height:1.8;margin-bottom:12px}.principle p{font-size:12px;color:var(--muted);line-height:2}.about-block,.source-section{display:grid;grid-template-columns:240px minmax(0,1fr);gap:42px;border-top:1px solid var(--line);padding:32px 0}.about-title h2{font-size:20px;font-weight:600}.about-title>p:last-child:not(.eyebrow){font-size:11px;color:var(--muted);margin-top:8px}.about-copy{max-width:750px}.about-copy p{font-size:13px;color:var(--muted);line-height:1.95;margin-bottom:13px}.about-copy strong{font-weight:600;color:#405c47}.source-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}.source-item{padding:12px 0 15px;border-bottom:1px solid #e1e7dc;min-width:0}.source-item a{font-size:12px;font-weight:600;text-decoration:none;line-height:1.7;display:block}.source-item a:hover{text-decoration:underline}.source-item p{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.7}.source-index{font-size:9px;letter-spacing:.04em;color:#9daa96;display:block;margin-bottom:4px}.site-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:20px 0 25px;color:#8b9788;font-size:10px;letter-spacing:.035em}.footer-version{font-size:9px;border:1px solid var(--line);border-radius:4px;padding:2px 5px;margin-left:6px}.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,15px);background:var(--green-deep);color:white;font-size:12px;border-radius:10px;box-shadow:0 5px 30px #0002;max-width:calc(100% - 30px);padding:12px 20px;opacity:0;pointer-events:none;z-index:100;transition:opacity .2s,transform .2s}.toast.show{opacity:1;transform:translate(-50%,0)}.skip-link{position:fixed;left:20px;top:-100px;padding:10px 20px;background:#fff;z-index:100}.skip-link:focus{top:12px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.mobile-result{display:none}.noscript{padding:24px;background:var(--sand);font-size:14px;position:fixed;bottom:0;width:100%;text-align:center}.print-heading{display:none}
+@media(min-width:1440px){.hero{padding-top:52px}.guide-layout{gap:36px}.goal-card{padding:20px;min-height:150px}}
+@media(max-width:1100px){.container{width:calc(100% - 40px)}.header-inner{width:calc(100% - 40px);gap:16px}.brand{font-size:16px}.brand-en{font-size:7px}.tab{padding:0 12px;font-size:12px}.download-button{padding:9px 11px}.hero h1{font-size:32px}.goal-grid{gap:9px}.goal-card{padding:17px 12px;min-height:151px}.goal-title{font-size:13px}.goal-detail{font-size:10px}.selection-dot{right:12px;top:19px}.guide-layout{gap:20px}.question{padding:18px}.result-top,.result-body{padding:21px}.result-title{font-size:23px}.options{gap:8px}.option{padding:11px 10px;gap:8px}.option-title{font-size:12px}.about-block,.source-section{grid-template-columns:190px minmax(0,1fr);gap:25px}}
+@media(max-width:800px){.header-inner{min-height:0;flex-wrap:wrap;gap:0;justify-content:space-between;padding-top:14px}.brand{font-size:16px}.brand-mark{width:34px;height:34px;border-radius:10px}.brand-mark svg{width:25px;height:25px}.brand-en{font-size:7px;margin-top:3px}.tabs{order:3;width:100%;height:46px;justify-content:center;margin-top:7px}.tab{padding:0 15px;flex:1}.download-button{font-size:11px;padding:8px 11px}.download-button svg{width:16px;height:16px}.hero{padding:28px 0 25px;gap:14px}.hero h1{font-size:29px}.hero-description{font-size:12px;line-height:1.85;max-width:550px}.hero-note{display:none}.eyebrow{font-size:9px;letter-spacing:.14em;margin-bottom:8px}.goal-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.goal-card{min-height:132px}.goal-card:nth-child(n+4){min-height:124px}.goal-card .goal-icon{height:28px;margin-bottom:7px}.goal-detail{font-size:10px}.guide-layout{grid-template-columns:1fr;gap:22px;margin-top:23px}.result-column{position:static}.result-card{scroll-margin-top:125px}.question{padding:22px}.question legend{font-size:16px}.options{gap:10px}.option{padding:14px}.option-title{font-size:13px}.option-detail{font-size:12px}.result-top,.result-body{padding:24px}.result-title{font-size:26px}.result-reason{font-size:13px}.check-text p{font-size:12px}.empty-result{min-height:235px;padding:28px}.empty-art{height:58px;margin-bottom:13px}.examples-section .mini-heading{margin-top:20px}.quiet-note{padding-top:16px}.mobile-result{display:flex;align-items:center;justify-content:center;gap:15px;position:fixed;right:20px;bottom:20px;background:var(--green-deep);color:white;border:1px solid #fff5;padding:11px 19px;border-radius:30px;box-shadow:0 5px 22px #173f3b33;font-size:12px;z-index:20}.table-toolbar{flex-direction:column;align-items:stretch;gap:14px}.filter-list{gap:6px}.filter{font-size:11px;padding:6px 12px}.search{max-width:none}.table-note{display:block}.table-note strong{display:block;margin-bottom:5px}.principle-grid{grid-template-columns:1fr;gap:12px;margin-bottom:27px}.principle{padding:21px 24px;display:grid;grid-template-columns:32px 1fr;gap:3px 14px}.principle-number{grid-row:1/3;margin:4px 0 0;font-size:20px}.principle h2{font-size:15px;margin-bottom:7px}.principle p{font-size:12px}.about-block,.source-section{grid-template-columns:1fr;gap:18px;padding:25px 0}.about-title h2{font-size:19px}.source-list{gap:0 22px}.site-footer{padding-bottom:78px}.toast{bottom:78px}#questions{scroll-margin-top:128px}.question-column{padding-bottom:0}}
+@media(max-width:480px){.container,.header-inner{width:calc(100% - 32px)}.goal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.goal-card{min-height:130px;padding:16px}.goal-card:last-child{grid-column:1/-1;min-height:80px;padding-left:61px;justify-content:center}.goal-card:last-child .goal-icon{position:absolute;left:20px;top:24px}.goal-card:last-child .goal-detail{margin-top:4px}.goal-title{font-size:13px}.goal-detail{font-size:11px}.hero h1{font-size:28px}.hero{padding-top:25px}.hero-description{margin-top:9px}.section-heading h2{font-size:14px}.step-number{width:24px;height:24px;font-size:10px}.question{padding:18px}.question legend{font-size:15px}.question-help{font-size:11px}.options{grid-template-columns:1fr}.options .option:last-child:nth-child(odd){grid-column:auto}.option{padding:12px 13px}.option-title{font-size:13px}.option-detail{font-size:11px}.answered{padding:13px 15px;gap:10px}.answer-copy strong{font-size:12px}.example-chip{font-size:10px;padding:7px 10px}.result-top,.result-body{padding:21px 19px}.result-title{font-size:23px}.check-text strong{font-size:12px}.source-list{grid-template-columns:1fr}.site-footer{font-size:9px;gap:15px}.site-footer>span:last-child{font-size:9px}.welcome{padding:22px 18px}.welcome-flow{gap:9px}.welcome-flow i{width:10px}.welcome-flow span{font-size:10px}.download-button{font-size:10px;padding:7px 9px}.tab{font-size:11px;padding:0 8px}.brand{font-size:15px}.brand-en{font-size:6.5px}.brand-mark{width:32px;height:32px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+@media print{@page{size:A4;margin:16mm}body{background:white;font-size:11pt}.site-header,.hero,.goal-section,.question-column,.examples-section,.quiet-note,.result-actions,.mobile-result,.site-footer,.toast,.table-toolbar,.table-detail{display:none!important}.container{width:100%;max-width:none}.guide-layout{display:block;margin:0}.result-column{position:static}.result-card{border:0;box-shadow:none;overflow:visible}.result-top{background:white;border-bottom:1px solid #999;padding:0 0 18px}.result-title{font-size:20pt}.result-body{padding:18px 0}.result-card details{display:block}.result-card details>summary{display:block}.result-card details>.detail-content{display:block!important}.check-list li,.report-block,.detail-block{break-inside:avoid}.result-top,.check-list{break-inside:avoid}.result-sources a{color:#444;text-decoration:none}.result-sources a:after{content:" (" attr(href) ")";font-size:8pt;overflow-wrap:anywhere}.table-wrap{overflow:visible;border:0;border-radius:0}table{min-width:0;width:100%}th,td{padding:8px 5px;font-size:9pt}.table-note{padding-bottom:0}.empty-result{border:0}.print-heading{display:block;font-size:13pt;margin-bottom:18px}.source-item{break-inside:avoid}.principle-grid{grid-template-columns:1fr}.principle{break-inside:avoid}.about-block,.source-section{display:block}.source-list{display:block}}
+
+.inline-help{display:inline;padding:0;border:0;background:transparent;color:var(--green);font-size:inherit;text-align:left;text-decoration:underline;text-underline-offset:3px;line-height:inherit}
+.principle .inline-help{margin-top:13px;font-size:12px}
+.result-help{display:flex;align-items:center;gap:9px;width:100%;border:1px solid #d7e5da;background:#f1f6ef;border-radius:9px;padding:12px 13px;margin:7px 0 18px;color:var(--green);font-size:12px;font-weight:600;text-align:left;line-height:1.6}
+.result-help span{flex:1}
+.result-help svg{width:17px;height:17px}
+.result-help:hover{background:#e5efe2;border-color:#a6bfa9}
+.assumptions-hero>.button{flex-shrink:0}
+.help-intro{display:flex;align-items:flex-start;gap:14px;border:1px solid #e3dac6;background:#f6f1e6;border-radius:13px;padding:19px 22px;margin-bottom:22px}
+.help-intro-mark{display:grid;place-items:center;flex:0 0 25px;height:25px;border:1px solid #b6a478;border-radius:50%;color:#8e7844;font-size:14px;font-weight:650;line-height:1;margin-top:1px}
+.help-intro strong{display:block;font-size:14px;color:#6f603d;font-weight:650}
+.help-intro p{font-size:12px;color:#80755c;line-height:1.85;margin-top:4px}
+.help-context{padding:10px 14px;margin-bottom:20px;background:var(--green-soft);border-left:2px solid #789d80;color:#446d51;font-size:12px;border-radius:0 7px 7px 0}
+.help-section{padding:27px 0 30px;border-top:1px solid var(--line)}
+.help-section-heading{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:650;margin-bottom:18px;line-height:1.6}
+.help-section-lead{font-size:12px;color:var(--muted);margin:-4px 0 19px;line-height:1.9}
+.help-target-grid,.help-visual-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.help-target{border:1px solid var(--line);border-radius:14px;background:white;padding:22px;scroll-margin-top:111px;transition:border-color .2s,background .2s,box-shadow .2s}
+.help-target p{font-size:12px;line-height:1.95;color:var(--muted)}
+.help-target .help-card-label{font-size:11px;font-weight:600;color:var(--green);margin-bottom:9px;line-height:1.6}
+.help-target h3{font-size:20px;font-weight:650;line-height:1.5;margin-bottom:13px;color:var(--green-deep)}
+.help-how{padding-top:15px;margin-top:16px;border-top:1px solid #e7ece4}
+.help-how strong{display:block;font-size:11px;font-weight:600;margin-bottom:4px;color:#566b57}
+.help-how b{font-weight:600;color:#4b6850}
+.help-reference{display:inline-block;font-size:10px;line-height:1.7;margin-top:13px;text-decoration:none}
+.help-reference:hover{text-decoration:underline}
+.help-visual{padding:0 20px 0 0}
+.help-visual+.help-visual{padding-left:20px;border-left:1px solid var(--line)}
+.help-visual-label{font-size:10px;font-weight:600;color:#7a917b;letter-spacing:.04em}
+.help-visual h3{font-size:15px;font-weight:650;margin:7px 0 9px;line-height:1.7}
+.help-visual p{font-size:12px;color:var(--muted);line-height:1.9}
+.help-visual .help-small-note{font-size:11px;color:#7f8b7c;margin-top:10px}
+.help-shapiro{border:1px solid var(--line);border-radius:14px;background:white;padding:24px}
+.help-shapiro-heading h3{font-size:16px;font-weight:650;line-height:1.8}
+.help-shapiro-heading p{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.9}
+.help-p-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:19px}
+.help-p-grid>div{padding:16px 18px;border:1px solid #e4e9e0;border-radius:10px;background:#f8faf6}
+.help-p-label{display:block;font-size:17px;font-weight:650;color:var(--green);margin-bottom:8px;letter-spacing:.01em}
+.help-p-grid strong{display:block;font-size:12px;font-weight:650;line-height:1.85}
+.help-p-grid p{font-size:12px;color:var(--muted);line-height:1.85;margin-top:6px}
+.help-more{display:grid;gap:10px;margin-top:20px}
+.help-detail{border:1px solid var(--line);border-radius:11px;background:white;padding:0 20px;scroll-margin-top:111px}
+.help-detail summary{font-size:13px;padding:16px 0;line-height:1.7}
+.help-detail .detail-content{padding-bottom:20px;max-width:1000px;font-size:12px;line-height:1.95}
+.help-detail .detail-content p+p{margin-top:10px}
+.help-detail .help-reference{margin-top:10px}
+.help-specific+.help-specific{border-top:1px solid #e8ece5;margin-top:16px;padding-top:16px}
+.help-specific{scroll-margin-top:111px}
+.help-dl{margin:15px 0 16px}
+.help-dl dt{font-size:12px;font-weight:650;color:#49654e;margin-top:12px}
+.help-dl dd{margin:4px 0 0;line-height:1.9}
+.help-highlight{border-color:#749a7a!important;background:#f1f7ed!important;box-shadow:0 0 0 2px #d8e6d5}
+.help-specific.help-highlight{padding:16px;border:1px solid #749a7a;border-radius:10px}
+.help-bottom{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 0 40px}
+.help-bottom p{font-size:12px;color:var(--muted)}
+.help-bottom .button{flex-shrink:0}
+@media(max-width:800px){
+  .assumptions-hero{align-items:flex-start;flex-direction:column;gap:17px}
+  .assumptions-hero>.button{font-size:11px;padding:8px 11px}
+  .help-intro{padding:17px 18px;gap:11px}
+  .help-intro strong{font-size:13px}
+  .help-intro p{font-size:11px}
+  .help-section{padding:23px 0 26px}
+  .help-section-heading{font-size:16px;margin-bottom:16px}
+  .help-target-grid{grid-template-columns:1fr;gap:11px}
+  .help-target{padding:19px 21px;scroll-margin-top:126px}
+  .help-target h3{font-size:19px;margin-bottom:9px}
+  .help-target .help-card-label{margin-bottom:6px}
+  .help-how{padding-top:12px;margin-top:12px}
+  .help-visual-grid{grid-template-columns:1fr;gap:17px}
+  .help-visual,.help-visual+.help-visual{padding:0;border:0}
+  .help-visual+.help-visual{padding-top:17px;border-top:1px dashed var(--line)}
+  .help-shapiro{padding:20px}
+  .help-p-grid{grid-template-columns:1fr;gap:11px}
+  .help-detail{padding:0 18px;scroll-margin-top:126px}
+  .help-specific{scroll-margin-top:126px}
+  .help-bottom{align-items:flex-start;flex-direction:column;gap:15px;padding-bottom:30px}
+}
+@media(max-width:480px){
+  .tabs{gap:0}
+  .tab{padding:0 6px}
+  .help-intro{padding:16px}
+  .help-context{font-size:11px}
+  .help-section-heading{font-size:15px;gap:8px}
+  .help-target{padding:18px}
+  .help-shapiro{padding:18px}
+  .help-p-grid>div{padding:14px}
+  .help-detail summary{font-size:12px}
+}
+@media print{
+  .result-help,.inline-help,.assumptions-hero>.button,.help-bottom .button{display:none!important}
+  .assumptions-hero{display:block!important;padding-top:0}
+  .assumptions-hero h1{font-size:21pt}
+  .help-target-grid,.help-visual-grid{grid-template-columns:1fr}
+  .help-target,.help-visual,.help-shapiro,.help-detail{break-inside:avoid;box-shadow:none}
+  .help-visual+.help-visual{padding:0;border:0}
+  .help-highlight{background:white!important;box-shadow:none}
+  .help-p-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#select" aria-label="統計手法ナビ ホーム">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M7 23V16M16 23V9M25 23V13" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="7" cy="12" r="2" fill="currentColor"/><circle cx="25" cy="8" r="2" fill="currentColor"/></svg></span>
+      <span>統計手法ナビ<span class="brand-en">STATISTICAL METHOD GUIDE</span></span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="表示するページ">
+      <button id="tab-select" role="tab" aria-selected="true" aria-controls="panel-select" data-tab="select" class="tab active">手法を選ぶ</button>
+      <button id="tab-table" role="tab" aria-selected="false" aria-controls="panel-table" data-tab="table" class="tab" tabindex="-1">早見表</button>
+      <button id="tab-assumptions" role="tab" aria-selected="false" aria-controls="panel-assumptions" data-tab="assumptions" class="tab" tabindex="-1">前提を確認</button>
+      <button id="tab-about" role="tab" aria-selected="false" aria-controls="panel-about" data-tab="about" class="tab" tabindex="-1">考え方と出典</button>
+    </nav>
+    <button class="button button-quiet download-button" id="download-app" type="button"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none"><path d="M10 3v9m-3-3 3 3 3-3M4 12v4h12v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>HTMLを保存</span></button>
+  </div>
+</header>
+
+<main id="main" class="container">
+  <section id="panel-select" role="tabpanel" aria-labelledby="tab-select">
+    <div class="hero">
+      <div><p class="eyebrow">RESEARCH, ONE QUESTION AT A TIME</p><h1>どの統計手法を使う？</h1><p class="hero-description">目的とデータの形から、候補となる手法と確認ポイントを見つけましょう。</p></div>
+      <div class="hero-note"><span class="note-line"></span><p>「何を調べたいか」から<br><strong>ひとつずつ選ぶ。</strong></p></div>
+    </div>
+
+    <section class="goal-section" aria-labelledby="goal-heading">
+      <div class="section-heading"><h2 id="goal-heading"><span class="step-number">01</span>何を調べたいですか？</h2><button type="button" id="reset" class="text-button" hidden>選び直す <span aria-hidden="true">↺</span></button></div>
+      <div id="goals" class="goal-grid"></div>
+    </section>
+
+    <div class="guide-layout">
+      <div class="question-column">
+        <div id="questions" aria-label="データの条件"></div>
+        <section class="examples-section" aria-labelledby="example-heading"><p class="mini-heading" id="example-heading">具体例から試す</p><div id="examples" class="example-list"></div></section>
+        <div class="quiet-note"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="M7 14h6M8 17h4M6.3 11.7a6 6 0 1 1 7.4 0c-.9.7-1.2 1.4-1.2 2.3h-5c0-.9-.3-1.6-1.2-2.3Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><p>症例数や正規性検定のp値だけで、手法を決めない構成です。<button class="inline-help" type="button" data-help="">分布・前提の確認方法を見る →</button></p></div>
+      </div>
+      <aside class="result-column" aria-label="選択した条件に合う候補">
+        <div id="result"></div>
+      </aside>
+    </div>
+    <button id="mobile-result" class="mobile-result" type="button" hidden>候補を見る <span aria-hidden="true">↓</span></button>
+  </section>
+
+  <section id="panel-table" role="tabpanel" aria-labelledby="tab-table" hidden>
+    <div class="hero compact"><div><p class="eyebrow">AT A GLANCE</p><h1>統計手法の早見表</h1><p class="hero-description">元の表の見通しのよさに、選ぶときの確認事項を加えました。</p></div></div>
+    <div class="table-toolbar"><div id="table-filters" class="filter-list" aria-label="目的で絞り込み"></div><label class="search"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="table-search" type="search" placeholder="手法・目的で検索" aria-label="早見表を検索"></label></div>
+    <p class="table-caption" id="table-caption" aria-live="polite"></p>
+    <div class="table-wrap"><table><thead><tr><th scope="col">目的・データ</th><th scope="col">比較・測定の形</th><th scope="col">候補となる手法</th><th scope="col">確認するポイント</th><th scope="col"><span class="sr-only">詳細</span></th></tr></thead><tbody id="quick-rows"></tbody></table></div>
+    <div class="table-note"><strong>症例数は一律の基準で判定しません。</strong><span>「検定の適用条件」と「必要な検出力・推定精度」を分けて考えます。各行の「詳しく」で、条件と出典を確認できます。</span></div>
+  </section>
+
+  <section id="panel-assumptions" role="tabpanel" aria-labelledby="tab-assumptions" hidden>
+    <div class="hero compact assumptions-hero"><div><p class="eyebrow">CHECK THE ASSUMPTIONS</p><h1>分布・前提の確認</h1><p class="hero-description">使う統計ソフトで、何をどう確認するか。3つの手順で整理しました。</p></div><button type="button" class="button button-quiet" data-return-to-guide>手法選びに戻る <span aria-hidden="true">↗</span></button></div>
+    <div class="help-intro"><span class="help-intro-mark" aria-hidden="true">!</span><div><strong>正規性のp値だけで、手法を決めない。</strong><p>図・外れ値・データの対応を一緒に確認します。このページは、確認する対象と方法を案内します。</p></div></div>
+    <p class="help-context" id="assumption-context" hidden></p>
+
+    <section class="help-section" aria-labelledby="help-target-heading">
+      <h2 class="help-section-heading" id="help-target-heading"><span class="step-number">01</span>何の分布を見る？</h2>
+      <div class="help-target-grid">
+        <article class="help-target" id="assumption-groups" tabindex="-1"><p class="help-card-label">独立した群の平均比較</p><h3>群ごとの値</h3><p>群を分けて、値の分布とばらつきを見ます。平均の異なる群をまとめた分布だけで判断しません。</p><div class="help-how"><strong>準備するもの</strong><p>測定値と、どの群かを示す情報。ソフトで群別の図を表示します。</p></div></article>
+        <article class="help-target" id="assumption-paired" tabindex="-1"><p class="help-card-label">同じ人の前後の平均比較</p><h3>各人の「後 − 前」</h3><p>対象の対応をそろえ、変化量の列を作ります。その列の分布や外れ値を確認します。</p><div class="help-how"><strong>ここを見る</strong><p>対応のあるt検定では、<b>個人ごとの差の分布</b>を確認します。</p></div><a class="help-reference" href="https://www.itl.nist.gov/div898/handbook/prc/section3/prc311.htm" target="_blank" rel="noopener noreferrer">対応のある解析について ↗</a></article>
+        <article class="help-target" id="assumption-model" tabindex="-1"><p class="help-card-label">線形回帰・分散分析</p><h3>モデルの残差</h3><p>モデルを当てはめ、「実測値 − 予測値」の残差を出します。残差の図で、誤差についての仮定を確認します。</p><div class="help-how"><strong>ここを見る</strong><p>説明変数すべての正規性が必要なわけではありません。反復測定分散分析では球面性、混合モデルでは設定した相関構造なども確認します。</p></div><a class="help-reference" href="https://www.itl.nist.gov/div898/handbook/pri/section2/pri24.htm" target="_blank" rel="noopener noreferrer">残差の確認方法 ↗</a></article>
+      </div>
+    </section>
+
+    <section class="help-section" aria-labelledby="help-plots-heading">
+      <h2 class="help-section-heading" id="help-plots-heading"><span class="step-number">02</span>統計ソフトで、図を表示する</h2>
+      <p class="help-section-lead">確認する列を選び、次の機能名を探します。群の比較では群別、前後比較では差の列を指定します。</p>
+      <div class="help-visual-grid">
+        <article class="help-visual"><span class="help-visual-label">分布の形を見る</span><h3>ヒストグラム・箱ひげ図</h3><p>左右の偏り、極端な値、群ごとのばらつきを確認します。少数例では個々の点も表示します。</p><p class="help-small-note">箱ひげ図で外れた点も、自動的には削除しません。入力や測定の経緯を確かめます。</p></article>
+        <article class="help-visual"><span class="help-visual-label">正規分布からのずれを見る</span><h3>正規Q–Qプロット</h3><p>点がおおむね直線に沿うかを見ます。大きな曲がりや端のずれは、歪みや裾の違いを考える手がかりです。</p><a class="help-reference" href="https://www.itl.nist.gov/div898/handbook/eda/section3/normprpl.htm" target="_blank" rel="noopener noreferrer">図の見方を確認する ↗</a></article>
+        <article class="help-visual"><span class="help-visual-label">回帰・分散分析の場合</span><h3>残差診断</h3><p>残差のQ–Qプロットに加え、残差と予測値の散布図を見ます。曲がりや扇状の広がりがあれば、関係の形や分散も見直します。</p><p class="help-small-note">正規性だけでなく、独立性やモデルの形も確認します。</p></article>
+      </div>
+    </section>
+
+    <section class="help-section" aria-labelledby="help-reading-heading">
+      <h2 class="help-section-heading" id="help-reading-heading"><span class="step-number">03</span>図と検定を合わせて読む</h2>
+      <div class="help-shapiro"><div class="help-shapiro-heading"><h3>Shapiro–Wilk検定を使う場合</h3><p>有意水準を0.05に決めた場合の読み方です。ソフトの説明で適用条件も確認します。</p></div><div class="help-p-grid"><div><span class="help-p-label">p ≥ 0.05</span><strong>正規分布だと証明されたわけではありません。</strong><p>正規性を否定する十分な証拠が得られなかった、という結果です。図や例数も一緒に確認します。</p></div><div><span class="help-p-label">p &lt; 0.05</span><strong>正規分布からのずれが示唆されます。</strong><p>直ちにt検定が不可と決めず、ずれの程度、外れ値、例数、比較したい量を合わせて検討します。</p></div></div><a class="help-reference" href="https://docs.scipy.org/doc/scipy/tutorial/stats/hypothesis_shapiro.html" target="_blank" rel="noopener noreferrer">検定結果の読み方の根拠 ↗</a></div>
+      <div class="help-more">
+        <details class="detail-block help-detail"><summary>症例数とWelch検定の注意点</summary><div class="detail-content"><p>「30例以上」でも、元の分布が正規分布になるわけではありません。症例数だけで適否を決めず、分布や外れ値、必要な推定精度を確認します。</p><p>Welch検定は等分散を仮定しない方法ですが、強い歪みや外れ値を自動的に解決するものではありません。</p><a class="help-reference" href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/t.test.html" target="_blank" rel="noopener noreferrer">Welch検定の説明 ↗</a></div></details>
+        <details class="detail-block help-detail" id="assumption-ranks" tabindex="-1"><summary>順位法・相関で確認すること</summary><div class="detail-content"><div class="help-specific"><strong>順位による比較</strong><p>Wilcoxon符号順位検定では、差の大きさを扱える尺度か、差の分布が対称かを確認します。順序尺度の前後比較では、符号検定も候補です。</p><p>Mann–Whitney検定を、いつでも中央値の差の検定と解釈することはできません。値の順位、分布の形、調べたい量を確認します。</p><a class="help-reference" href="https://search.r-project.org/R/refmans/stats/html/wilcox.test.html" target="_blank" rel="noopener noreferrer">順位検定の前提と解釈 ↗</a></div><div class="help-specific" id="assumption-association" tabindex="-1"><strong>2変数の関連</strong><p>まず2変数の散布図で、直線的か、単調な関係か、外れ値があるかを見ます。Pearsonの通常のp値・信頼区間には分布の仮定も関わります。</p><p>Spearmanでも関係の形や同順位、観測の独立性を確認します。同じ対象の反復測定を、独立した点としてまとめません。</p><a class="help-reference" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html" target="_blank" rel="noopener noreferrer">相関係数と推論の条件 ↗</a></div></div></details>
+        <details class="detail-block help-detail" id="assumption-other" tabindex="-1"><summary>割合・生存時間・ROCで確認すること</summary><div class="detail-content"><p>これらの解析は、正規性を共通の入口にして選びません。候補となる手法の前提を確認します。</p><dl class="help-dl"><dt>割合・カテゴリー</dt><dd>観測の独立性や対応を確認します。カイ二乗検定では期待度数、McNemar検定では不一致ペアを見ます。二項ロジスティック回帰では分離や因子と対数オッズの関係など、モデルに合う前提を確認します。</dd><dt>イベントまでの時間</dt><dd>追跡時間、イベント、打ち切りを確認します。Coxモデルでは比例ハザード性も確認します。</dd><dt>検査の判別能・ROC</dt><dd>基準となる病気あり・なし、検査値の向き、AUCの信頼区間を確認します。2つのAUCを比べる場合は、対象の対応も確認します。</dd></dl><p>各手法の詳しい条件と参考資料は、選択した候補の「確認すること」「根拠を読む」から確認できます。</p></div></details>
+      </div>
+    </section>
+    <div class="help-bottom"><p>図・要約値・比較したい量をそろえて、候補の前提を確かめましょう。</p><button type="button" class="button" data-return-to-guide>手法選びに戻る <span aria-hidden="true">→</span></button></div>
+  </section>
+
+  <section id="panel-about" role="tabpanel" aria-labelledby="tab-about" hidden>
+    <div class="hero compact"><div><p class="eyebrow">HOW TO CHOOSE</p><h1>選ぶ前に、大切な3つのこと。</h1><p class="hero-description">簡潔な選択ガイドにも、残しておきたい考え方があります。</p></div></div>
+    <div class="principle-grid">
+      <article class="principle"><span class="principle-number">01</span><h2>まず、答えたい問いを決める</h2><p>平均値の差、順位による大小、割合、時間経過では、調べていることが異なります。平均を比べる方法と順位法は、完全に同じ問いの代替とは限りません。</p></article>
+      <article class="principle"><span class="principle-number">02</span><h2>分布と、データのつながりを見る</h2><p>正規性検定のp値だけで切り替えず、図や外れ値も確認します。前後比較では変化量、回帰では残差を見ます。同じ人の測定を独立した観測として扱わないことも大切です。</p><button type="button" class="inline-help" data-help="">具体的な確認方法を見る →</button></article>
+      <article class="principle"><span class="principle-number">03</span><h2>症例数は、研究の目的から設計する</h2><p>「30例以上」「1因子10イベント」は万能な基準ではありません。検出したい差、ばらつき、イベント数、推定する係数の数、求める精度から検討します。</p></article>
+    </div>
+    <section class="about-block"><div class="about-title"><p class="eyebrow">READING THE RESULTS</p><h2>結果の見方</h2></div><div class="about-copy"><p><strong>表示されるのは、条件に合う候補です。</strong>「確認すること」で前提を確かめ、必要に応じて「条件によっては」に示す方法も検討してください。</p><p>このアプリは手法の選択を助けるガイドです。データの解析やp値の計算は行いません。症例数を入力して適否を自動判定する機能も設けていません。</p><p>調整した関連の推定と、個人の予測モデル作成では、因子の選び方や評価の目的が異なります。群と時点を同時に比較する研究や、複雑な反復・集団構造は、その構造を扱うモデルへ進みます。</p></div></section>
+    <section class="source-section" aria-labelledby="source-heading"><div class="about-title"><p class="eyebrow">SOURCES</p><h2 id="source-heading">参考資料</h2><p>公式資料・方法論論文へのリンク</p></div><div id="all-sources" class="source-list"></div></section>
+  </section>
+</main>
+<footer class="site-footer container"><span>統計手法ナビ <span class="footer-version">v1.1</span></span><span>目的を選ぶ。条件を確かめる。</span></footer>
+<div id="status" class="toast" role="status" aria-live="polite"></div>
+<noscript><div class="noscript">この選択ガイドにはJavaScriptが必要です。ブラウザのJavaScriptを有効にしてご利用ください。</div></noscript>
+<script>(function () {
+  'use strict';
+
+  const goals = [
+    { id: 'compare', label: '群・前後の差', detail: '群の違いや、治療前後の変化を調べる', icon: 'compare' },
+    { id: 'association', label: '2変数の関連', detail: '2つの値がどのように関係するか調べる', icon: 'association' },
+    { id: 'adjust', label: '背景因子を調整', detail: '年齢・性別などを考慮した関連を調べる', icon: 'adjust' },
+    { id: 'survival', label: 'イベントまでの時間', detail: '発症・再発・死亡までの経過を調べる', icon: 'survival' },
+    { id: 'diagnostic', label: '検査の判別能', detail: '病気あり・なしを見分ける力を調べる', icon: 'diagnostic' }
+  ];
+
+  const sources = [
+    { id: 'ttest', title: 'R：t検定・Welchの方法', url: 'https://stat.ethz.ch/R-manual/R-devel/library/stats/html/t.test.html', note: '独立した2群、対応のあるデータ、等分散を仮定しない方法。' },
+    { id: 'anova', title: 'R：一元配置の平均比較', url: 'https://stat.ethz.ch/R-manual/R-devel/library/stats/html/oneway.test.html', note: '通常の分散分析とWelchの分散分析。' },
+    { id: 'residuals', title: 'NIST：モデルの残差と仮定', url: 'https://www.itl.nist.gov/div898/handbook/pri/section2/pri24.htm', note: '残差の分布、独立性、分散の確認。' },
+    { id: 'normal-plot', title: 'NIST：正規Q–Qプロットの見方', url: 'https://www.itl.nist.gov/div898/handbook/eda/section3/normprpl.htm', note: '点の並び方から、正規分布からのずれを確認する。' },
+    { id: 'shapiro-reading', title: 'SciPy：Shapiro–Wilk検定の読み方', url: 'https://docs.scipy.org/doc/scipy/tutorial/stats/hypothesis_shapiro.html', note: '小さくないp値は、正規性を証明する結果ではない。' },
+    { id: 'paired', title: 'NIST：対応のある観測の解析', url: 'https://www.itl.nist.gov/div898/handbook/prc/section3/prc311.htm', note: '対応のあるt検定では対象内の差を扱う。' },
+    { id: 'rank-meaning', title: 'Fay & Proschan：順位検定が答える問い', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2857732/', note: 'Mann–Whitneyとt検定の仮定・解釈を整理した論文。' },
+    { id: 'wilcoxon', title: 'R：Wilcoxonの順位検定', url: 'https://search.r-project.org/R/refmans/stats/html/wilcox.test.html', note: '符号順位検定、順位和検定、差の対称性と計算法。' },
+    { id: 'kruskal', title: 'SciPy：Kruskal–Wallis検定', url: 'https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html', note: '独立した群の順位比較と小標本での近似への注意。' },
+    { id: 'friedman', title: 'R：Friedman検定', url: 'https://stat.ethz.ch/R-manual/R-devel/library/stats/html/friedman.test.html', note: '対応する条件がそろった反復測定の順位比較。' },
+    { id: 'sign', title: 'NIST：符号検定', url: 'https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/signtest.htm', note: '対応する値の増減方向を用いる方法。順序尺度にも適用できる。' },
+    { id: 'chi-square', title: 'R：カイ二乗検定', url: 'https://www.stat.ethz.ch/R-manual/R-patched/library/stats/html/chisq.test.html', note: '分割表、期待度数、近似とシミュレーション。' },
+    { id: 'fisher', title: 'R：Fisherの正確検定', url: 'https://www.stat.ethz.ch/R-manual/R-devel/library/stats/html/fisher.test.html', note: '疎な分割表などで用いる正確法。総数20未満に限定されない。' },
+    { id: 'mcnemar', title: 'statsmodels：McNemar検定', url: 'https://www.statsmodels.org/stable/generated/statsmodels.stats.contingency_tables.mcnemar.html', note: '対応のある二値データ。不一致ペアと正確法。' },
+    { id: 'cochran', title: 'statsmodels：CochranのQ検定', url: 'https://www.statsmodels.org/stable/generated/statsmodels.stats.contingency_tables.cochrans_q.html', note: '対応のある二値データを3条件以上で比較する方法。' },
+    { id: 'stuart', title: 'statsmodels：周辺分布の同等性', url: 'https://www.statsmodels.org/stable/generated/statsmodels.stats.contingency_tables.SquareTable.homogeneity.html', note: '同じカテゴリーによる前後比較。Stuart–Maxwell検定など。' },
+    { id: 'pearson', title: 'SciPy：Pearsonの相関係数', url: 'https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html', note: '直線的関連、検定、信頼区間。' },
+    { id: 'spearman', title: 'SciPy：Spearmanの順位相関', url: 'https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.spearmanr.html', note: '順位による単調な関連と小標本での推論。' },
+    { id: 'repeated', title: 'SAS：反復測定と混合モデル', url: 'https://support.sas.com/documentation/cdl/en/statug/68162/HTML/default/statug_glm_details46.htm', note: '個人内相関、球面性、群と時点、欠測を含む設計。' },
+    { id: 'gee', title: 'statsmodels：GEEと集団内相関', url: 'https://www.statsmodels.org/stable/gee.html', note: '連続・二値・順序・名義データの反復測定やクラスタを扱う。' },
+    { id: 'ordinal-model', title: 'statsmodels：順序尺度の回帰モデル', url: 'https://www.statsmodels.org/stable/generated/statsmodels.miscmodels.ordinal_model.OrderedModel.html', note: '順序はあるが数値の間隔には意味を置かないアウトカム。' },
+    { id: 'surv-data', title: 'R：生存時間データの定義', url: 'https://search.r-project.org/CRAN/refmans/survival/html/Surv.html', note: '追跡時間とイベント・打ち切りの状態を組み合わせる。' },
+    { id: 'km', title: 'R：生存曲線の推定', url: 'https://www.stat.ethz.ch/R-manual/R-devel/library/survival/html/survfit.html', note: 'Kaplan–Meier法などによる曲線の推定。' },
+    { id: 'logrank', title: 'R：生存曲線の比較', url: 'https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survdiff.html', note: 'Log-rank検定と複数の生存曲線の比較。' },
+    { id: 'cox', title: 'R：Cox比例ハザードモデル', url: 'https://search.r-project.org/CRAN/refmans/survival/html/coxph.html', note: '共変量、時間依存効果、クラスタを考慮する拡張。' },
+    { id: 'cox-ph', title: 'R：比例ハザード性の確認', url: 'https://search.r-project.org/CRAN/refmans/survival/html/cox.zph.html', note: 'Coxモデルの比例ハザード性と残差の図示。' },
+    { id: 'events', title: 'van Smedenら：10イベント則の限界', url: 'https://link.springer.com/article/10.1186/s12874-016-0267-3', note: 'イベント数だけではロジスティック回帰の精度を判断できない。' },
+    { id: 'prediction-size', title: 'Rileyら：予測モデルの症例数設計', url: 'https://www.bmj.com/content/368/bmj.m441', note: '候補パラメータ数、総例数、イベント割合、予測性能に応じた設計。' },
+    { id: 'survival-size', title: 'Schoenfeld：生存時間解析の症例数', url: 'https://pubmed.ncbi.nlm.nih.gov/6354290/', note: '効果や検出力に応じて必要イベント数を考える。' },
+    { id: 'roc', title: 'pROC：ROC曲線とAUC', url: 'https://search.r-project.org/CRAN/refmans/pROC/html/roc.html', note: '二値の基準状態と検査値から判別能を評価する。' },
+    { id: 'roc-test', title: 'pROC：2つのROC曲線の比較', url: 'https://search.r-project.org/CRAN/refmans/pROC/html/roc.test.html', note: '対応あり・なしを区別したAUC比較。DeLong法やブートストラップ。' }
+  ];
+
+  const option = (value, label, detail) => ({ value, label, detail });
+  const question = (key, title, help, options) => ({ key, title, help, options });
+
+  const dataQuestion = question('data', '比べる値の種類は？', '例に近いものを選んでください。', [
+    option('continuous', '連続値', 'LDL-C、血圧、体重など'),
+    option('ordinal', '順序のある値', '重症度や段階評価など'),
+    option('binary', '二値', 'あり・なし、成功・失敗'),
+    option('nominal', '3カテゴリー以上', '血液型など、順序のない分類')
+  ]);
+  const designQuestion = question('design', 'どのように比較しますか？', '「同じ人」には、対応づけたペアも含みます。', [
+    option('ind2', '別々の人の2群', '治療群と対照群など'),
+    option('indmany', '別々の人の3群以上', '3種類の治療法など'),
+    option('pair2', '同じ人の2時点・2条件', '治療前と治療後など'),
+    option('pairmany', '同じ人の3時点・3条件以上', '開始時・1か月・3か月など'),
+    option('mixed', '群と時点を同時に比較', '治療群・対照群それぞれの前後など')
+  ]);
+  const aimQuestion = question('aim', '何の違いを調べたいですか？', '正規性検定のp値だけで、この選択を決める必要はありません。', [
+    option('mean', '平均値・平均変化量', '平均でどれくらい違うか'),
+    option('rank', '順位による大小関係', 'どちらが全体として高い傾向か'),
+    option('unsure', 'まだ決めていない', '候補と、それぞれの問いを比べる')
+  ]);
+  const patternQuestion = question('pattern', 'どのような関連を調べたいですか？', 'まず散布図で関係の形を見ると選びやすくなります。', [
+    option('linear', '直線的な関連', '一方が増えると、もう一方が直線的に変わる'),
+    option('rank', '順位・単調な関連', '高い順・低い順がどれくらい一致するか'),
+    option('unsure', 'まだ決めていない', 'PearsonとSpearmanを比べる')
+  ]);
+  const structureQuestion = question('structure', '観測のまとまりはありますか？', '同じ人の繰り返しや、施設・家族などの集まりは別に扱います。', [
+    option('independent', '対象ごとに独立', '基本的に1人から1組の値'),
+    option('clustered', '反復・集団内の相関がある', '同じ人の繰り返し、施設・家族など')
+  ]);
+  const outcomeQuestion = question('outcome', 'アウトカムの種類は？', '説明する側の因子ではなく、結果として調べたい値です。', [
+    option('continuous', '連続値', 'LDL-C、血圧、体重など'),
+    option('binary', '二値', '発症あり・なしなど'),
+    option('time', 'イベントまでの時間', '再発・死亡までの期間など'),
+    option('other', 'その他', '順序尺度、3分類以上、回数など')
+  ]);
+  const intentQuestion = question('intent', '解析の目的は？', '関連の推定と、個人の予測では評価する内容が変わります。', [
+    option('effect', '関連・効果の大きさを推定', '背景因子を考慮した差や比を知りたい'),
+    option('prediction', '個人の結果を予測', '複数の因子から値やリスクを予測したい')
+  ]);
+  const survivalQuestion = question('task', '時間の情報をどう使いたいですか？', '発生・打ち切りまでの時間と、イベントの有無が必要です。', [
+    option('describe', '経過を示す', '生存確率やイベントなしの確率を描く'),
+    option('compare', '群間を比較', '生存曲線の違いを調べる'),
+    option('adjust', '背景因子を調整', '年齢・性別などを考慮する')
+  ]);
+  const diagnosticQuestion = question('task', 'どのように評価しますか？', '検査値・スコアと、基準となる病気あり・なしの情報を使います。', [
+    option('estimate', '1つの検査・スコアを評価', 'ROC曲線、AUC、感度・特異度を調べる'),
+    option('compare', '2つの検査・スコアを比較', 'AUCの差などを調べる')
+  ]);
+  const pairingQuestion = question('pairing', '2つの検査を誰に行いましたか？', '同じ人から得た検査結果には対応があります。', [
+    option('paired', '同じ対象に両方を実施', '対応のあるROC比較'),
+    option('independent', '別々の独立した対象', '対応のないROC比較')
+  ]);
+
+  function validAnswer(state, q) {
+    return q.options.some((o) => o.value === state[q.key]);
+  }
+
+  function questionsFor(input) {
+    const state = input && typeof input === 'object' ? input : {};
+    if (state.goal === 'compare') {
+      const qs = [dataQuestion];
+      if (validAnswer(state, dataQuestion)) qs.push(designQuestion);
+      if (state.data === 'continuous' && validAnswer(state, designQuestion) && state.design !== 'mixed') qs.push(aimQuestion);
+      return qs;
+    }
+    if (state.goal === 'association') {
+      return validAnswer(state, patternQuestion) ? [patternQuestion, structureQuestion] : [patternQuestion];
+    }
+    if (state.goal === 'adjust') {
+      const qs = [outcomeQuestion];
+      if (validAnswer(state, outcomeQuestion)) qs.push(structureQuestion);
+      if (validAnswer(state, outcomeQuestion) && validAnswer(state, structureQuestion)) qs.push(intentQuestion);
+      return qs;
+    }
+    if (state.goal === 'survival') return [survivalQuestion];
+    if (state.goal === 'diagnostic') {
+      return state.task === 'compare' ? [diagnosticQuestion, pairingQuestion] : [diagnosticQuestion];
+    }
+    return [];
+  }
+
+  const generalSample = '「30例以上」などの固定基準では選びません。効果の大きさ、ばらつき、必要な検出力・信頼区間の幅から症例数を考えます。';
+  const rankSample = '小標本では正確法・置換法の可否や、同順位の扱いを確認します。順位法でも、十分な検出力や精度があるとは限りません。';
+  const regressionSample = '「1因子10イベント／15例」だけでは判断しません。推定する係数の数、総例数、アウトカムに応じたイベント数、求める精度を検討します。';
+  const predictionSample = '候補パラメータ数、総例数、アウトカムの分布・イベント割合、期待する予測性能から設計します。最終的に残った変数数だけで十分性を判断しません。';
+  const survivalSample = '「イベント10件以上」という固定基準では判断しません。検出したい効果、群の割合、検出力、追跡期間から必要な情報量を考えます。';
+
+  function result(id, title, english, reason, checks, sample, report, sourceIds, extra) {
+    return Object.assign({
+      id, title, english, reason,
+      checks: checks.map((entry) => ({ label: entry[0], text: entry[1] })),
+      sample, report, sources: sourceIds
+    }, extra || {});
+  }
+
+  function meanResult(design) {
+    if (design === 'ind2') return result('welch-t', 'Welchのt検定', 'Welch’s two-sample t-test', '独立した2群の平均値の差を調べます。2群の分散が同じであるとは仮定しません。', [
+      ['独立性', '別々の対象から得た値か確認します。反復測定を独立な値として並べないようにします。'],
+      ['分布と外れ値', '群ごとの分布図を見ます。Welchでも強い歪みや極端な外れ値は自動的には解決しません。'],
+      ['比べたい量', '平均差が研究の問いに合うかを確認します。']
+    ], generalSample, '群ごとの人数・平均・標準偏差、平均差と95%信頼区間、p値。', ['ttest', 'residuals'], {
+      alternative: { title: '条件によっては', text: '等分散を合理的に仮定できる場合はStudentのt検定。強い歪みがある場合は変換や別のモデルを検討します。' },
+      details: [{ label: '正規性の確認', text: '正規性検定のp値だけで選びません。分布の形、外れ値、例数を合わせて考えます。' }]
+    });
+    if (design === 'indmany') return result('welch-anova', 'Welchの一元配置分散分析', 'Welch’s one-way ANOVA', '独立した3群以上の平均値に違いがあるかを調べます。等分散を仮定しない方法です。', [
+      ['独立性', '各対象が独立していることを確認します。'],
+      ['群ごとの状態', '分布、外れ値、分散、人数の偏りを確認します。'],
+      ['個別の比較', 'どの群の差を知りたいかを決めます。複数の比較には多重性への対応が必要です。']
+    ], generalSample, '各群の要約値、全体の比較結果、必要な群間差と信頼区間、多重比較の方法。', ['anova', 'residuals'], {
+      alternative: { title: '等分散を仮定できる場合', text: '通常の一元配置分散分析も候補です。背景因子を調整したい場合は回帰モデルを検討します。' }
+    });
+    if (design === 'pair2') return result('paired-t', '対応のあるt検定', 'Paired t-test', '同じ対象の2時点・2条件について、平均変化量が0と異なるかを調べます。', [
+      ['正しい対応', '同じ対象の値同士を組にします。対応が崩れていないか確認します。'],
+      ['変化量の分布', '各時点を別々に見るだけでなく、「後−前」などの差の分布と外れ値を確認します。'],
+      ['対象間の独立性', '対象同士は独立しているか、施設や家族などのまとまりがないか確認します。']
+    ], generalSample, '解析した組数、前後の要約値、平均変化量と95%信頼区間、p値。', ['paired', 'ttest'], {
+      alternative: { title: '順位で変化を調べる場合', text: '差の分布の対称性などが妥当ならWilcoxon符号順位検定。変化の方向だけを扱うなら符号検定を検討します。' }
+    });
+    return result('repeated-anova', '反復測定分散分析', 'Repeated-measures ANOVA', '同じ対象を3時点・3条件以上で測定した連続値の平均を比較します。', [
+      ['個人内の相関', '同じ対象から得た測定値に対応があることを解析に反映します。'],
+      ['球面性と残差', '各時点間の差の分散に関する仮定と、残差・外れ値を確認します。'],
+      ['欠測と比較', '測定がそろっているか、どの時点間の差を調べたいかを確認します。']
+    ], generalSample, '時点別の要約、時点の効果、必要な比較の差と信頼区間、球面性補正や欠測の扱い。', ['repeated', 'residuals'], {
+      alternative: { title: '測定のそろい方が複雑な場合', text: '線形混合モデルも候補です。球面性が合わない場合は補正を検討します。欠測の理由や仮定も確認します。' }
+    });
+  }
+
+  function rankResult(design, ordinal) {
+    if (design === 'ind2') return result('mann-whitney', 'Mann–WhitneyのU検定', 'Mann–Whitney U test', '独立した2群を順位に基づいて比較します。平均差を直接調べる検定ではありません。', [
+      ['独立性', '別々の対象から得た2群か確認します。'],
+      ['順位と解釈', '値の大小を順位で扱えますか。中央値の差と解釈するには分布形などの条件が必要です。'],
+      ['同順位と計算法', '同じ値が多いか、小標本かを確認し、正確法・近似法などを選びます。']
+    ], rankSample, '各群の人数と分布の要約、順位比較の結果、可能なら大小関係の効果指標と信頼区間。', ['rank-meaning', 'wilcoxon'], {
+      details: [{ label: '中央値を比べる検定？', text: '一般には、中央値差の検定と同じではありません。同じ分布形で位置だけが異なる場合などに、位置の差として解釈できます。' }]
+    });
+    if (design === 'indmany') return result('kruskal-wallis', 'Kruskal–Wallis検定', 'Kruskal–Wallis test', '独立した3群以上を順位に基づいて比較します。', [
+      ['独立性', '対象が別々で、各観測が独立しているか確認します。'],
+      ['問いと分布', '順位比較が目的に合うか確認します。中央値差と解釈するには追加の条件が必要です。'],
+      ['近似と個別比較', '少数例や同順位に注意します。どの群が違うかを調べる際は多重性に対応します。']
+    ], rankSample, '各群の分布と人数、全体の順位比較の結果、必要な個別比較と補正方法。', ['kruskal', 'rank-meaning'], {
+      alternative: { title: '平均差が研究目的の場合', text: 'Welchの分散分析や、目的に合う回帰モデルを検討します。順位法への変更で問いまで変わらないか確認します。' }
+    });
+    if (design === 'pair2' && ordinal) return result('sign-test', '符号検定', 'Paired sign test', '同じ対象で値が上がったか、下がったかを比べます。段階の間隔を数値的に解釈しなくても使える方法です。', [
+      ['正しい対応', '同じ対象の2時点・2条件を組にします。'],
+      ['変化の方向', '上がる・下がるの意味が共通しているか確認します。'],
+      ['変化なしの扱い', '同じ値の組をどう扱うか確認します。通常は変化なしを除いた組で推論します。']
+    ], '変化した組数が情報量になります。小標本ではp値が離散的になり、十分な検出力を得られないことがあります。', '上昇・低下・変化なしの組数、検定の方法とp値、変化の分布。', ['sign', 'wilcoxon'], {
+      alternative: { title: '差の大きさも意味を持つ場合', text: '尺度の差を数量として扱え、差の分布の対称性が妥当なら、Wilcoxon符号順位検定も候補です。' }
+    });
+    if (design === 'pair2') return result('wilcoxon-signed', 'Wilcoxon符号順位検定', 'Wilcoxon signed-rank test', '同じ対象の差を、符号と差の大きさの順位に基づいて調べます。', [
+      ['対応と尺度', '対象の対応が正しく、差の大きさを意味のある量として扱えるか確認します。'],
+      ['差の対称性', '位置の変化を解釈するために、差の分布の対称性を確認します。'],
+      ['差0・同順位', '変化なしや同じ大きさの差に注意し、正確法・近似法などの扱いを確認します。']
+    ], rankSample, '組数、変化量の分布、検定結果、差0や同順位・計算法の扱い。', ['wilcoxon'], {
+      alternative: { title: '方向だけを調べる場合', text: '符号検定が候補です。平均変化量が目的なら、対応のあるt検定や平均を扱うモデルを検討します。' }
+    });
+    return result('friedman', 'Friedman検定', 'Friedman test', '同じ対象を3時点・3条件以上で測定した値を、対象内の順位で比較します。', [
+      ['同じ対象', '各条件を同じ対象で測定しているか確認します。'],
+      ['測定のそろい方', '各対象で条件がそろっているか、欠測による除外が生じるか確認します。'],
+      ['計算法と比較', '小標本・同順位、どの条件間を比較するか、多重性への対応を確認します。']
+    ], rankSample, '対象数、条件別の分布、全体の順位比較、必要な個別比較と補正方法。', ['friedman'], {
+      alternative: { title: '欠測・調整因子を含む場合', text: 'データの尺度に合う反復測定モデルを検討します。Friedman検定だけでは複雑な調整はできません。' }
+    });
+  }
+
+  function undecidedMeanRank(design) {
+    const mean = meanResult(design);
+    const rank = rankResult(design, false);
+    return result('mean-or-rank-' + design, '比較する対象で候補が変わります', 'Mean or rank-based comparison', '平均の違いを知りたいのか、順位による大小関係を知りたいのかで方法が変わります。', [
+      ['知りたい量', '平均差、典型的な値、大小関係のうち、研究で答えたい問いを決めます。'],
+      ['データを見る', '分布図や外れ値を確認します。対応があれば変化量も見ます。'],
+      ['選択の根拠', '正規性検定のp値や症例数だけで機械的に切り替えないようにします。']
+    ], generalSample, '選んだ方法が何を比較するかを説明し、その量の推定値・信頼区間を示します。', Array.from(new Set(mean.sources.concat(rank.sources))), {
+      candidates: [
+        { title: mean.title, text: '平均値・平均変化量が研究の問いなら候補です。' },
+        { title: rank.title, text: '順位に基づく比較が研究の問いなら候補です。平均差と同じ検定ではありません。' }
+      ]
+    });
+  }
+
+  function clusteredResult(kind, context) {
+    const titles = {
+      continuous: ['線形混合モデルなど', 'Linear mixed-effects model'],
+      binary: ['二値データの反復測定モデル', 'Generalized mixed model / GEE'],
+      ordinal: ['順序尺度の反復測定モデル', 'Ordinal model for repeated observations'],
+      nominal: ['多カテゴリの反復測定モデル', 'Multinomial model for repeated observations'],
+      other: ['集団内相関を考慮したモデル', 'Model for clustered observations']
+    };
+    const selected = titles[kind] || titles.other;
+    const mixed = context === 'mixed';
+    return result('clustered-' + kind + '-' + context, selected[0], selected[1], mixed ? '群の違いと、同じ対象の時点間の変化を、一緒にモデル化します。' : '同じ対象や同じ集団の観測には相関があります。その構造を含めて解析します。', [
+      ['データの階層', '対象、時点、施設・家族などのまとまりを明確にします。'],
+      ['アウトカムと問い', '値の尺度に合うモデルを選び、どの群間差・変化を比較するか決めます。'],
+      ['欠測と情報量', '欠測の理由、対象・集団の数、相関構造の仮定を確認します。']
+    ], '測定回数を増やしても、独立した対象が増えたことにはなりません。対象数、集団数、反復回数と相関を考慮して設計します。', 'モデルの種類、対象数と測定数、調整した差・比と信頼区間、相関・欠測の扱い。', kind === 'continuous' ? ['repeated', 'residuals'] : ['gee'], {
+      alternative: { title: 'モデルの選び方', text: kind === 'continuous' ? '反復測定ANOVA、線形混合モデル、GEEなどから、設計と推定したい効果に合うものを選びます。' : '二値・順序・名義などの尺度に合う混合モデルやGEEを検討します。' },
+      details: [{ label: mixed ? '群ごとの前後検定との違い' : '単純な相関・検定との違い', text: mixed ? '各群で前後の有意差を別々に調べても、群間の変化の差を評価したことにはなりません。目的の群間差を直接比較します。' : '繰り返し測定を独立した観測として扱うと、不確実性を適切に評価できないことがあります。' }]
+    });
+  }
+
+  function categoricalResult(state) {
+    const { data, design } = state;
+    if (design === 'mixed') return clusteredResult(data, 'mixed');
+    if (design === 'ind2' || design === 'indmany') {
+      const twoByTwo = data === 'binary' && design === 'ind2';
+      return result(twoByTwo ? 'chi-fisher' : 'chi-square-table', twoByTwo ? 'カイ二乗検定／Fisherの正確検定' : 'カイ二乗検定', twoByTwo ? 'Chi-squared test / Fisher’s exact test' : 'Chi-squared test of a contingency table', '群とカテゴリーの分割表を作り、割合・分布の違いを調べます。', [
+        ['独立性と定義', '対象が独立し、各群でカテゴリーの定義が共通しているか確認します。'],
+        ['期待度数', '総人数だけでなく、帰無仮説の下で各セルに期待される人数を確認します。'],
+        ['差の大きさ', '検定のp値に加え、割合の差や適切な比、信頼区間を示します。']
+      ], '「総数20以上」で振り分けません。期待度数、表の大きさ、検出したい割合差と精度を確認します。', '各セルの人数・割合、適切な差や比と95%信頼区間、検定と計算法。', ['chi-square', 'fisher'], {
+        alternative: { title: '期待度数が小さい場合', text: twoByTwo ? '疎な2×2表ではFisherの正確検定などを検討します。期待度数5は目安であり、総人数とは異なります。' : '表に合う正確法やモンテカルロ法を検討します。群間の個別比較を増やす場合は多重性にも対応します。' }
+      });
+    }
+    if (data === 'binary' && design === 'pair2') return result('mcnemar', 'McNemar検定', 'McNemar’s test', '同じ対象の二値結果について、前後・条件間の割合の変化を調べます。', [
+      ['対応', '同じ対象の結果を2×2表にまとめます。'],
+      ['二値の定義', '前後・条件間で「あり・なし」などの定義が同じか確認します。'],
+      ['不一致ペア', 'ありからなし、なしからありに変わった組の数を確認します。']
+    ], '総人数より、不一致ペア数が検定の情報量に関係します。不一致が少ない場合は正確法を検討します。', '対応する2×2表、不一致ペア数、変化の大きさ、正確法・近似法の別とp値。', ['mcnemar'], {
+      alternative: { title: '3条件以上なら', text: '対応のある二値データを3条件以上で比較する場合はCochranのQ検定や反復測定モデルを検討します。' }
+    });
+    if (data === 'binary' && design === 'pairmany') return result('cochran-q', 'CochranのQ検定', 'Cochran’s Q test', '同じ対象の二値結果を、3時点・3条件以上で比較します。', [
+      ['同じ対象', '各条件で同じ対象を測定しているか確認します。'],
+      ['二値と欠測', '結果の定義が共通し、条件がそろっているか確認します。'],
+      ['近似と個別比較', '少数例での近似、同じ反応が続く対象の多さ、複数比較の扱いを確認します。']
+    ], '少数例では通常のカイ二乗近似が十分でないことがあります。実際の反応パターンと必要な検出力から検討します。', '条件別の人数・割合、反応の組合せ、全体の検定と必要な個別比較。', ['cochran'], {
+      alternative: { title: '調整・欠測を含む場合', text: '二値データに合う混合モデルやGEEなど、反復測定のモデルを検討します。' }
+    });
+    if (data === 'nominal' && design === 'pair2') return result('stuart-maxwell', 'Stuart–Maxwell検定', 'Stuart–Maxwell test of marginal homogeneity', '同じ対象の前後で、3カテゴリー以上の割合の分布が変化したかを調べます。', [
+      ['同じ対象', '同じ対象の前後を正しく対応づけます。'],
+      ['共通のカテゴリー', '前後でカテゴリーの種類と意味が同じか確認します。'],
+      ['分割表と問い', '前後の周辺分布の変化が問いに合うか、セルが疎でないか確認します。']
+    ], '移動したカテゴリーの組合せが情報量になります。疎な表では通常の近似の妥当性を検討します。', '前後を対応づけた分割表、カテゴリー別の割合の変化、検定方法と結果。', ['stuart'], {
+      alternative: { title: 'より複雑な変化を扱う場合', text: '調整因子を含める場合や複数時点がある場合は、多カテゴリの対応を扱うモデルを検討します。' }
+    });
+    return clusteredResult('nominal', 'repeated');
+  }
+
+  function compareResult(state) {
+    if (state.design === 'mixed') return clusteredResult(state.data, 'mixed');
+    if (state.data === 'binary' || state.data === 'nominal') return categoricalResult(state);
+    if (state.data === 'ordinal') return rankResult(state.design, true);
+    if (state.aim === 'mean') return meanResult(state.design);
+    if (state.aim === 'rank') return rankResult(state.design, false);
+    return undecidedMeanRank(state.design);
+  }
+
+  function associationResult(state) {
+    if (state.structure === 'clustered') return clusteredResult('other', 'association');
+    if (state.pattern === 'unsure') return result('correlation-choice', '関係の形から候補を選びます', 'Pearson or Spearman correlation', '散布図で関係を確認し、直線的な関連か、順位による単調な関連かを選びます。', [
+      ['2変数の組', '同じ対象から得た2つの値を組にします。「2群」の比較ではありません。'],
+      ['散布図', '直線性、単調性、外れ値、曲線的な関係を確認します。'],
+      ['調べたいこと', '関連の強さと、2つの測定法の一致性は別の問いです。']
+    ], '30組という一律の最低条件はありません。関連の大きさと信頼区間の精度、小標本での計算法を検討します。', '散布図、解析した組数、選んだ相関係数と信頼区間、推論の方法。', ['pearson', 'spearman'], {
+      candidates: [
+        { title: 'Pearsonの相関係数', text: '連続した2変数の直線的な関連を評価します。' },
+        { title: 'Spearmanの順位相関係数', text: '順位による単調な関連を評価します。順序尺度も扱えます。' }
+      ]
+    });
+    const rank = state.pattern === 'rank';
+    return result(rank ? 'spearman' : 'pearson', rank ? 'Spearmanの順位相関係数' : 'Pearsonの相関係数', rank ? 'Spearman’s rank correlation' : 'Pearson’s correlation', rank ? '2変数が、順位の上でどれくらい単調に関係するかを評価します。' : '連続した2変数の直線的な関連の強さを評価します。', [
+      ['2変数と対象', '同じ対象から得た2つの値を組にし、対象同士は独立しているか確認します。'],
+      ['関係の形', rank ? '散布図で単調な関係かを確認します。単調でない曲線関係は十分に表せないことがあります。' : '散布図で直線性と外れ値を確認します。相関が小さくても、別の形の関係があることがあります。'],
+      ['推論の方法', rank ? '同順位と小標本に注意し、必要なら置換法などを検討します。' : '通常のp値・信頼区間に必要な分布の仮定などを確認します。']
+    ], '「30組以上」で合否を決めません。相関の大きさ、信頼区間の幅、小標本での推論を確認します。', '散布図、組数、相関係数と95%信頼区間、必要に応じてp値と計算法。', rank ? ['spearman'] : ['pearson'], {
+      alternative: { title: '目的が別の場合', text: '背景因子を調整したい場合は回帰モデルへ。測定法の一致性を知りたい場合は、一致性の評価方法を別に検討します。' }
+    });
+  }
+
+  function coxResult(intent, clustered) {
+    const prediction = intent === 'prediction';
+    return result('cox-' + (clustered ? 'clustered-' : '') + (prediction ? 'prediction' : 'effect'), clustered ? 'クラスタを考慮したCoxモデルなど' : 'Cox比例ハザードモデル', clustered ? 'Cox model with clustering' : 'Cox proportional hazards model', prediction ? '説明変数とイベントまでの時間の関係をモデル化し、指定した時点のリスク予測に使います。' : '背景因子を考慮して、イベント発生のハザード比などを推定します。', [
+      ['時間と状態', '追跡の起点、イベント、打ち切りを定義し、時間と状態の両方を準備します。'],
+      ['比例ハザード性', '効果が時間で変化しないとみなせるか、残差の図や検定などで確認します。'],
+      [clustered ? '集団内の相関' : 'モデルの設計', clustered ? '施設・家族・反復などをモデルや分散推定に反映します。集団数も確認します。' : '説明変数の関係の形、打ち切りの仮定、候補パラメータ数を確認します。']
+    ], prediction ? predictionSample : regressionSample, prediction ? '予測する時点、リスク予測、校正・判別能、内部検証、モデルの式と仮定。' : '調整ハザード比と95%信頼区間、調整因子、イベント数、比例ハザード性と打ち切りの扱い。', ['surv-data', 'cox', 'cox-ph', prediction ? 'prediction-size' : 'survival-size'], {
+      alternative: { title: '仮定が合わない場合', text: '時間依存効果や層別化など、目的に合うモデルを検討します。競合イベントの扱いも研究の問いに合わせます。' },
+      details: [{ label: prediction ? '予測モデルの確認' : '調整と因果解釈', text: prediction ? '開発データでの良好な当てはまりだけでは予測性能を判断しません。校正・判別能と内部検証を確認します。' : '因子を加えるだけで因果効果を推定できるわけではありません。研究デザインと調整する因子の根拠を確認します。' }]
+    });
+  }
+
+  function adjustResult(state) {
+    const prediction = state.intent === 'prediction';
+    if (state.outcome === 'time') return coxResult(state.intent, state.structure === 'clustered');
+    if (state.structure === 'clustered') {
+      const r = clusteredResult(state.outcome, 'adjust-' + state.intent);
+      r.sample = prediction ? predictionSample + ' 集団内の相関と集団数も考慮します。' : r.sample;
+      r.details = (r.details || []).concat([{ label: prediction ? '予測の評価' : '調整因子', text: prediction ? '予測したい対象を明確にし、校正・判別能と内部検証を計画します。' : 'どの効果を推定するかを決め、調整する因子を研究上の根拠から選びます。' }]);
+      r.sources = Array.from(new Set(r.sources.concat(prediction ? ['prediction-size'] : [])));
+      return r;
+    }
+    if (state.outcome === 'other') return result('regression-other-' + state.intent, 'アウトカムに合う回帰モデル', 'Regression matched to the outcome', '順序尺度、3カテゴリー以上、回数などでは、値の性質に合うモデルを選びます。', [
+      ['値の意味', '順序だけがあるのか、順序のない分類か、回数かを整理します。'],
+      ['モデルの前提', 'カテゴリーや回数の分布、関係の形、観測の独立性を確認します。'],
+      ['研究目的', prediction ? '何を予測するかと、予測の評価・検証の方法を決めます。' : '何の差・比を推定するかと、調整する因子の根拠を決めます。']
+    ], prediction ? predictionSample : regressionSample, 'アウトカムに合う係数・差・比、信頼区間、モデルの仮定と調整因子。', ['ordinal-model', 'prediction-size'], {
+      candidates: [
+        { title: '順序のあるカテゴリー', text: '順序ロジスティック回帰など。比例オッズなどの仮定を確認します。' },
+        { title: '順序のない分類・回数', text: '多項ロジスティック回帰、Poisson・負の二項回帰など、値の性質に合う方法を選びます。' }
+      ]
+    });
+    const binary = state.outcome === 'binary';
+    return result((binary ? 'logistic-' : 'linear-') + state.intent, binary ? '二項ロジスティック回帰' : '線形回帰・重回帰', binary ? 'Binary logistic regression' : 'Linear regression', prediction ? (binary ? '複数の因子から、二値アウトカムが起こる確率を予測します。' : '複数の因子から、連続したアウトカムの値を予測します。') : (binary ? '背景因子を考慮して、二値アウトカムとの関連をオッズ比などで推定します。' : '背景因子を考慮して、連続したアウトカムの差や関連を推定します。'), [
+      ['因子の選び方', prediction ? '候補因子を定め、予測する対象集団と利用する時点を明確にします。' : '研究の問いに基づき、調整因子を選びます。単変量のp値だけで選ばないようにします。'],
+      ['モデルの仮定', binary ? '連続した因子と対数オッズの関係、疎なカテゴリー、完全分離などを確認します。' : '関係の形、残差、分散、外れ値を確認します。全説明変数の正規性が必要なわけではありません。'],
+      [prediction ? '予測の検証' : '独立性と情報量', prediction ? '当てはまりだけでなく、内部検証を行い、予測の誤差や校正を評価します。' : '観測の独立性、推定する係数の数、必要な精度を確認します。']
+    ], prediction ? predictionSample : regressionSample, prediction ? (binary ? 'モデルの式、予測確率、校正・判別能、内部検証の結果。' : 'モデルの式、予測誤差・校正、内部検証の結果。') : (binary ? '調整オッズ比と95%信頼区間、調整因子、イベント数とモデルの確認事項。' : '回帰係数・調整した差と95%信頼区間、調整因子、残差の確認事項。'), binary ? ['events', 'prediction-size'] : ['residuals', 'prediction-size'], {
+      details: [{ label: prediction ? '変数数の数え方' : '調整と因果解釈', text: prediction ? '4カテゴリーの因子は通常3つの係数を使います。非線形効果・交互作用も含めた候補パラメータ数で考えます。' : '調整後の関連がそのまま因果効果になるとは限りません。研究デザインと調整する因子の役割を確認します。' }]
+    });
+  }
+
+  function survivalResult(state) {
+    if (state.task === 'adjust') return coxResult('effect', false);
+    if (state.task === 'describe') return result('kaplan-meier', 'Kaplan–Meier法', 'Kaplan–Meier survival estimate', 'イベントが起こらずに経過する確率を、時間に沿って推定・表示します。曲線そのものは検定ではありません。', [
+      ['時間の定義', '追跡の起点とイベントの定義をそろえます。'],
+      ['打ち切り', 'イベント発生か打ち切りかを記録し、打ち切りの理由・妥当性を確認します。'],
+      ['曲線の精度', '各時点のリスク集合人数と信頼区間を確認します。']
+    ], '追跡が長い部分では残っている対象が少なくなります。総人数だけでなく、時点ごとの人数、イベント数、信頼区間を見ます。', '曲線、95%信頼区間、リスク集合人数、イベント・打ち切り数、追跡期間。', ['surv-data', 'km'], {
+      alternative: { title: '別の目的がある場合', text: '群間比較はLog-rank検定、背景因子の調整はCoxモデルなど。競合イベントがある場合は累積発生関数などを検討します。' }
+    });
+    return result('log-rank', 'Log-rank検定', 'Log-rank test', '独立した群の生存曲線を比較します。Kaplan–Meier曲線と合わせて経過を確認します。', [
+      ['群と起点', '比較する群、追跡の起点、イベントの定義をそろえます。'],
+      ['打ち切り', '群ごとの追跡状況や打ち切りの理由・仮定を確認します。'],
+      ['時間による違い', '曲線の交差や効果の時間変化に注意します。検出力や結果の解釈に影響します。']
+    ], survivalSample, 'Kaplan–Meier曲線、リスク集合人数、イベント数、検定結果、目的に合う効果の指標。', ['surv-data', 'logrank', 'survival-size'], {
+      alternative: { title: '調整や時間変化を扱う場合', text: '共変量を調整する場合はCoxモデルなど。効果が時間で変わる場合は、その問いに合う比較指標・モデルを検討します。' }
+    });
+  }
+
+  function diagnosticResult(state) {
+    if (state.task === 'estimate') return result('roc-auc', 'ROC曲線・AUC', 'ROC curve and area under the curve', '検査値やスコアが、病気あり・なしをどれくらい見分けるかを評価します。', [
+      ['基準となる状態', '病気あり・なしを判定する基準と対象集団を明確にします。'],
+      ['検査値の向き', '高いほど病気らしいのか、低いほど病気らしいのかを確認します。'],
+      ['閾値と精度', 'AUCだけでなく、必要な閾値での感度・特異度と信頼区間を確認します。']
+    ], '病気あり・なし両方の人数が精度に関係します。AUCや感度・特異度の信頼区間の幅から検討します。', 'ROC曲線、AUCと95%信頼区間、評価した閾値と感度・特異度、各群の人数。', ['roc'], {
+      details: [{ label: '判別能と実際の利用', text: 'AUCだけで最適な閾値は決まりません。偽陽性・偽陰性の影響も考慮します。予測確率の校正とは別の評価です。' }]
+    });
+    const paired = state.pairing === 'paired';
+    return result('roc-compare-' + state.pairing, paired ? '対応のあるAUC比較' : '独立したAUCの比較', paired ? 'Paired ROC / AUC comparison' : 'Independent ROC / AUC comparison', paired ? '同じ対象で得た2つの検査のAUCを、結果同士の相関を考慮して比較します。' : '独立した対象で得た2つのAUCを比較します。対象集団の違いにも注意が必要です。', [
+      ['対応の指定', paired ? '両検査が同じ対象に行われ、対象の順序が正しく対応しているか確認します。' : '対象が独立しているか、病気の定義と比較する集団が同等か確認します。'],
+      ['比較する量', '全AUC、部分AUC、特定の感度・特異度など、比較したい量を決めます。'],
+      ['計算法', '検査値の方向をそろえ、比較対象に合うDeLong法・ブートストラップなどを選びます。']
+    ], 'AUCの差、病気あり・なしの人数、対応の有無、必要な精度・検出力から設計します。', '両検査のAUC、AUC差と95%信頼区間、比較法、対応の有無、対象数。', ['roc', 'roc-test'], {
+      alternative: { title: '特定の使用場面を比べる場合', text: 'AUC差だけでなく、必要な特異度での感度など、実際に利用する条件での性能も評価します。' }
+    });
+  }
+
+  function resolve(input) {
+    const state = input && typeof input === 'object' ? input : {};
+    if (!goals.some((goal) => goal.id === state.goal)) return null;
+    const qs = questionsFor(state);
+    if (qs.length === 0 || !qs.every((q) => validAnswer(state, q))) return null;
+    switch (state.goal) {
+      case 'compare': return compareResult(state);
+      case 'association': return associationResult(state);
+      case 'adjust': return adjustResult(state);
+      case 'survival': return survivalResult(state);
+      case 'diagnostic': return diagnosticResult(state);
+      default: return null;
+    }
+  }
+
+  const quickRows = [
+    { method: 'Welchのt検定', purpose: '平均の差', setting: '連続値・独立2群', check: '群ごとの分布・外れ値', state: { goal: 'compare', data: 'continuous', design: 'ind2', aim: 'mean' } },
+    { method: 'Welchの分散分析', purpose: '平均の差', setting: '連続値・独立3群以上', check: '分布・比較する群・多重性', state: { goal: 'compare', data: 'continuous', design: 'indmany', aim: 'mean' } },
+    { method: '対応のあるt検定', purpose: '平均変化量', setting: '連続値・対応2時点', check: '変化量の分布・外れ値', state: { goal: 'compare', data: 'continuous', design: 'pair2', aim: 'mean' } },
+    { method: '反復測定分散分析', purpose: '平均の変化', setting: '連続値・対応3時点以上', check: '球面性・欠測・個人内相関', state: { goal: 'compare', data: 'continuous', design: 'pairmany', aim: 'mean' } },
+    { method: 'Mann–WhitneyのU検定', purpose: '順位で比較', setting: '独立2群', check: '解釈・同順位・計算法', state: { goal: 'compare', data: 'continuous', design: 'ind2', aim: 'rank' } },
+    { method: 'Kruskal–Wallis検定', purpose: '順位で比較', setting: '独立3群以上', check: '小標本での近似・多重性', state: { goal: 'compare', data: 'ordinal', design: 'indmany' } },
+    { method: 'Wilcoxon符号順位検定', purpose: '差の順位で比較', setting: '対応2時点・差を扱える尺度', check: '差の対称性・差0・同順位', state: { goal: 'compare', data: 'continuous', design: 'pair2', aim: 'rank' } },
+    { method: 'Friedman検定', purpose: '対象内の順位で比較', setting: '対応3時点以上', check: '測定のそろい方・欠測', state: { goal: 'compare', data: 'ordinal', design: 'pairmany' } },
+    { method: 'カイ二乗／Fisher検定', purpose: '割合の差', setting: '二値・独立2群', check: '総人数ではなく期待度数', state: { goal: 'compare', data: 'binary', design: 'ind2' } },
+    { method: 'McNemar検定', purpose: '割合の変化', setting: '二値・対応2時点', check: '不一致ペア数・正確法', state: { goal: 'compare', data: 'binary', design: 'pair2' } },
+    { method: 'Pearsonの相関係数', purpose: '直線的な関連', setting: '対象ごとに2変数の組', check: '散布図・外れ値・推論の仮定', state: { goal: 'association', pattern: 'linear', structure: 'independent' } },
+    { method: 'Spearmanの順位相関', purpose: '単調な関連', setting: '対象ごとに2変数の組', check: '単調性・同順位・小標本', state: { goal: 'association', pattern: 'rank', structure: 'independent' } },
+    { method: '線形回帰・重回帰', purpose: '背景因子を調整', setting: '連続アウトカム', check: '関係の形・残差・調整因子', state: { goal: 'adjust', outcome: 'continuous', structure: 'independent', intent: 'effect' } },
+    { method: '二項ロジスティック回帰', purpose: '背景因子を調整', setting: '二値アウトカム', check: '分離・係数の数・イベント数', state: { goal: 'adjust', outcome: 'binary', structure: 'independent', intent: 'effect' } },
+    { method: 'Kaplan–Meier法', purpose: '経過を示す', setting: 'イベントまでの時間', check: '打ち切り・リスク集合人数', state: { goal: 'survival', task: 'describe' } },
+    { method: 'Log-rank検定', purpose: '生存曲線を比較', setting: '時間・独立した群', check: '打ち切り・曲線の交差', state: { goal: 'survival', task: 'compare' } },
+    { method: 'Cox比例ハザードモデル', purpose: '時間と背景因子', setting: 'イベントまでの時間', check: '比例ハザード性・係数の数', state: { goal: 'survival', task: 'adjust' } },
+    { method: 'ROC曲線・AUC', purpose: '検査の判別能', setting: '二値の状態と検査値', check: '基準状態・閾値・信頼区間', state: { goal: 'diagnostic', task: 'estimate' } }
+  ];
+
+  const examples = [
+    { label: '治療前後のLDL-C', state: { goal: 'compare', data: 'continuous', design: 'pair2', aim: 'mean' } },
+    { label: '2群の発症割合', state: { goal: 'compare', data: 'binary', design: 'ind2' } },
+    { label: '年齢を考慮したLDL-C', state: { goal: 'adjust', outcome: 'continuous', structure: 'independent', intent: 'effect' } },
+    { label: '再発までの時間', state: { goal: 'survival', task: 'compare' } },
+    { label: '検査値の判別能', state: { goal: 'diagnostic', task: 'estimate' } }
+  ];
+
+  window.StatGuide = { goals, questionsFor, resolve, sources, quickRows, examples };
+}());
+</script>
+<script>(() => {
+  'use strict';
+  const G = window.StatGuide;
+  const tabNames = ['select','table','assumptions','about'];
+  const assumptionTopics = ['groups','paired','model','ranks','association','other'];
+  const $ = id => document.getElementById(id);
+  const h = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const svg = (paths, cls='') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+  const icons = {
+    compare: svg('<path d="M5 19V9m7 10V5m7 14V11M3 21h18"/><path d="M3 6h4m3-4h4m3 6h4"/>'),
+    association: svg('<path d="M3 3v18h18M6 16 19 5"/><circle cx="7" cy="12" r="1.4"/><circle cx="13" cy="12" r="1.4"/><circle cx="17" cy="9" r="1.4"/>'),
+    adjust: svg('<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="7" cy="18" r="2" fill="currentColor" stroke="none"/>'),
+    survival: svg('<path d="M3 3v18h18M4 6h5v4h5v4h6v4"/>'),
+    diagnostic: svg('<path d="M3 3v18h18M4 20C4 9 9 4 20 4"/><path d="m5 19 2-2m2-2 2-2m2-2 2-2m2-2 2-2" stroke-opacity=".4"/>'),
+    check: svg('<rect x="4" y="3" width="16" height="18" rx="3"/><path d="m8 11 2 2 6-6M8 17h8"/>'),
+    copy: svg('<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V4a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h3"/>'),
+    print: svg('<path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 13h10v8H7zM17 11h.01"/>'),
+    arrow: svg('<path d="M5 12h14m-5-5 5 5-5 5"/>')
+  };
+  let state = {}, editingKey = null, currentTab = 'select', currentResult = null, filter = 'all', query = '', toastTimer;
+  const sourceMap = new Map(G.sources.map(s => [s.id,s]));
+  const goals = new Map(G.goals.map(g => [g.id,g]));
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function toast(text) {
+    clearTimeout(toastTimer);
+    $('status').textContent = text;
+    $('status').classList.add('show');
+    toastTimer = setTimeout(() => $('status').classList.remove('show'), 3300);
+  }
+
+  function renderGoals() {
+    $('goals').innerHTML = G.goals.map(g => `<button type="button" class="goal-card${state.goal===g.id?' selected':''}" data-goal="${h(g.id)}" aria-pressed="${state.goal===g.id}"><span class="goal-icon">${icons[g.id]||icons.compare}</span><span class="selection-dot" aria-hidden="true"></span><span class="goal-title">${h(g.label)}</span><span class="goal-detail">${h(g.detail)}</span></button>`).join('');
+    $('reset').hidden = !state.goal;
+  }
+
+  function selectedOption(q) { return q.options.find(o => o.value===state[q.key]); }
+
+  function renderQuestions() {
+    if (!state.goal) {
+      $('questions').innerHTML = '<section class="welcome"><h2>統計手法の一覧から、<br>自分のデータに合う候補へ。</h2><p>上の5つの目的から選んでください。<br>具体例から試すこともできます。</p><div class="welcome-flow" aria-hidden="true"><span><b>1</b>目的</span><i></i><span><b>2</b>データの形</span><i></i><span><b>3</b>候補を確認</span></div></section>';
+      return;
+    }
+    const qs = G.questionsFor(state);
+    let canShow = true;
+    $('questions').innerHTML = qs.map((q,i) => {
+      if(!canShow) return '';
+      const selected = selectedOption(q);
+      if(selected && editingKey!==q.key) return `<button type="button" class="answered" data-edit="${h(q.key)}" aria-label="${h(q.title)}：${h(selected.label)}。変更する"><span class="step-number">${String(i+2).padStart(2,'0')}</span><span class="answer-copy"><small>${h(q.title)}</small><strong>${h(selected.label)}</strong></span><span class="change-label">変更</span></button>`;
+      if(!selected) canShow = false;
+      return `<fieldset class="question" id="question-${h(q.key)}"><legend><span class="step-number">${String(i+2).padStart(2,'0')}</span><span>${h(q.title)}</span></legend><p class="question-help">${h(q.help)}</p><div class="options">${q.options.map(o => `<label class="option${state[q.key]===o.value?' selected':''}"><input type="radio" name="${h(q.key)}" data-key="${h(q.key)}" value="${h(o.value)}" ${state[q.key]===o.value?'checked':''}><span class="radio-mark" aria-hidden="true"></span><span class="option-text"><span class="option-title">${h(o.label)}</span>${o.detail?`<span class="option-detail">${h(o.detail)}</span>`:''}</span></label>`).join('')}</div></fieldset>`;
+    }).join('');
+  }
+
+  const emptyArt = '<svg class="empty-art" viewBox="0 0 210 90" fill="none" aria-hidden="true"><path d="M31 45h45m0 0V19h31m-31 26v26h31m31-52h28m-28 52h28" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="31" width="31" height="28" rx="7" fill="#e0e9db" stroke="#b5c8af"/><path d="M17 40h13m-13 5h8m-8 5h10" stroke="#7d9a79" stroke-width="1.2"/><rect x="107" y="6" width="32" height="26" rx="7" fill="#f7f9f4" stroke="#b5c8af"/><rect x="107" y="58" width="32" height="26" rx="7" fill="#f7f9f4" stroke="#b5c8af"/><circle cx="180" cy="19" r="13" fill="#dbe8cf" stroke="#b5c8af"/><path d="m174 19 4 4 8-8" stroke="#6c9168" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="180" cy="71" r="13" fill="#eff3e9" stroke="#c0ceba"/><path d="M115 19h16m-16 52h16" stroke="#adc0a4" stroke-width="1.2"/></svg>';
+
+  function detail(label, content, open=false) { return `<details class="detail-block"${open?' open':''}><summary>${h(label)}</summary><div class="detail-content">${content}</div></details>`; }
+
+  function renderResult() {
+    currentResult = G.resolve(state);
+    $('mobile-result').hidden = !currentResult;
+    if(!currentResult) {
+      const qs = state.goal ? G.questionsFor(state) : [];
+      const next = qs.find(q => !selectedOption(q));
+      $('result').innerHTML = `<div class="empty-result"><div class="empty-content">${emptyArt}<h2>${state.goal?'あと少し、条件を教えてください。':'ここに手法の候補が表示されます。'}</h2><p>${next?`${h(next.title)}<br>選択に合わせて、次の質問が表示されます。`:'候補だけでなく、選ぶ理由と<br>確認することも一緒に。'}</p></div></div>`;
+      return;
+    }
+    const r = currentResult;
+    const sources = (r.sources||[]).map(id=>sourceMap.get(id)).filter(Boolean);
+    const candidateHtml = r.candidates?.length ? `<div class="candidate-list">${r.candidates.map(c=>`<div class="candidate"><strong>${h(c.title)}</strong><p>${h(c.text)}</p></div>`).join('')}</div>` : '';
+    const advanced = (r.details||[]).map(d=>`<strong>${h(d.label)}</strong><p>${h(d.text)}</p>`).join('');
+    $('result').innerHTML = `<article class="result-card" id="result-card"><div class="result-top"><p class="result-kicker"><span aria-hidden="true"></span>この条件での候補</p><h2 class="result-title">${h(r.title)}</h2>${r.english?`<p class="result-english">${h(r.english)}</p>`:''}<p class="result-reason">${h(r.reason)}</p>${candidateHtml}</div><div class="result-body"><h3 class="result-label">${icons.check}確認すること</h3><ol class="check-list">${r.checks.map((c,i)=>`<li><span class="check-number" aria-hidden="true">${String(i+1).padStart(2,'0')}</span><div class="check-text"><strong>${h(c.label)}</strong><p>${h(c.text)}</p></div></li>`).join('')}</ol><div class="report-block"><strong>結果に添える指標</strong><p>${h(r.report)}</p></div>${detail('症例数の考え方',`<p>${h(r.sample)}</p>`)}${r.alternative?detail('条件によっては',`<strong>${h(r.alternative.title)}</strong><p>${h(r.alternative.text)}</p>`):''}${advanced?detail('もう少し詳しく',advanced):''}${sources.length?detail('根拠を読む',`<ul class="result-sources">${sources.map(s=>`<li><a href="${h(s.url)}" target="_blank" rel="noopener noreferrer">${h(s.title)} ↗</a></li>`).join('')}</ul>`):''}<div class="result-actions"><button type="button" class="button" id="copy-result">${icons.copy}結果をコピー</button><button type="button" class="button button-quiet" id="print-result">${icons.print}印刷する</button></div></div></article>`;
+    $('result').querySelector('.check-list').insertAdjacentHTML('afterend', `<button type="button" class="result-help" data-help="${assumptionTopic(state)}">${icons.check}<span>分布や前提の確認方法を見る</span>${icons.arrow}</button>`);
+  }
+
+  function renderGuide() { renderGoals(); renderQuestions(); renderResult(); }
+
+  function assumptionTopic(s) {
+    if(s.goal==='association') return 'association';
+    if(s.goal==='adjust') return s.outcome==='continuous' ? 'model' : 'other';
+    if(s.goal!=='compare') return 'other';
+    if(s.data==='binary'||s.data==='nominal') return 'other';
+    if(s.design==='mixed') return s.data==='continuous' ? 'model' : 'other';
+    if(s.data==='ordinal'||s.aim==='rank') return 'ranks';
+    if(s.design==='pair2') return 'paired';
+    if(s.design==='pairmany') return 'model';
+    return 'groups';
+  }
+
+  function openAssumptions(topic='',update=true) {
+    changeTab('assumptions',false);
+    const validTopic=assumptionTopics.includes(topic) ? topic : '';
+    if(update) {try{history.replaceState(null,'','#assumptions'+(validTopic?'/'+validTopic:''));}catch{}}
+    const target=validTopic ? $('assumption-'+validTopic) : null;
+    if(target) {
+      const disclosure=target.closest('details');if(disclosure)disclosure.open=true;
+      target.classList.add('help-highlight');
+      target.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
+      target.focus({preventScroll:true});
+    } else window.scrollTo({top:0,behavior:reduceMotion?'auto':'smooth'});
+  }
+
+  function returnToGuide() {
+    changeTab('select',false);
+    try{history.replaceState(null,'','#select');}catch{}
+    const target=currentResult ? $('result-card') : $('goal-heading');
+    if(target){target.tabIndex=-1;target.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});target.focus({preventScroll:true});}
+  }
+
+  function routeFromHash() {
+    const [name,topic]=location.hash.slice(1).split('/');
+    if(!tabNames.includes(name))return;
+    if(name==='assumptions')openAssumptions(topic,false);else changeTab(name,false);
+  }
+
+  function applyAnswer(key,value) {
+    const qs = G.questionsFor(state), idx = qs.findIndex(q=>q.key===key);
+    if(idx<0 || !qs[idx].options.some(o=>o.value===value)) return;
+    const next = {goal:state.goal};
+    for(let i=0;i<idx;i++) if(state[qs[i].key]!==undefined) next[qs[i].key]=state[qs[i].key];
+    next[key]=value;
+    state=next; editingKey=null;
+    renderGuide();
+    const following = $('questions').querySelector('.question');
+    if(following) {
+      const first = following.querySelector('input');
+      if(first) first.focus({preventScroll:true});
+      if(innerWidth<=800) following.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
+    } else {
+      const answer = $('questions').querySelector(`[data-edit="${key}"]`);
+      if(answer) answer.focus({preventScroll:true});
+      if(currentResult && innerWidth<=800) $('result-card').scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
+    }
+  }
+
+  function normalizePreset(raw) {
+    if(!raw || !goals.has(raw.goal)) return {};
+    const clean = {goal:raw.goal};
+    for(let i=0;i<5;i++) {
+      let changed=false;
+      for(const q of G.questionsFor(clean)) {
+        if(q.options.some(o=>o.value===raw[q.key])) {if(clean[q.key]!==raw[q.key])changed=true; clean[q.key]=raw[q.key];}
+        else break;
+      }
+      if(!changed) break;
+    }
+    return clean;
+  }
+
+  function usePreset(raw) {
+    state=normalizePreset(raw); editingKey=null;
+    changeTab('select',false); renderGuide();
+    try{history.replaceState(null,'','#select');}catch{}
+    if(innerWidth<=800 && currentResult) $('result-card').scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
+    else $('goal-heading').scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
+  }
+
+  function changeTab(tab,update=true) {
+    if(!tabNames.includes(tab)) return;
+    currentTab=tab;
+    for(const name of tabNames) {
+      $('panel-'+name).hidden=name!==tab;
+      $('tab-'+name).classList.toggle('active',name===tab);
+      $('tab-'+name).setAttribute('aria-selected',String(name===tab));
+      $('tab-'+name).tabIndex=name===tab?0:-1;
+    }
+    if(tab==='table') renderTable();
+    if(tab==='assumptions') {
+      $('assumption-context').hidden=!currentResult;
+      $('assumption-context').textContent=currentResult ? '選択中の候補：'+currentResult.title : '';
+      $('panel-assumptions').querySelectorAll('.help-highlight').forEach(el=>el.classList.remove('help-highlight'));
+    }
+    if(update) {try{history.replaceState(null,'','#'+tab);}catch{} window.scrollTo({top:0,behavior:reduceMotion?'auto':'smooth'});}
+  }
+
+  function renderTable() {
+    const filters=[{id:'all',label:'すべて'},{id:'compare',label:'群・前後の差'},{id:'association',label:'関連'},{id:'adjust',label:'調整'},{id:'survival',label:'生存時間'},{id:'diagnostic',label:'判別能'}];
+    $('table-filters').innerHTML=filters.map(f=>`<button type="button" class="filter${filter===f.id?' active':''}" aria-pressed="${filter===f.id}" data-filter="${f.id}">${f.label}</button>`).join('');
+    const term=query.trim().toLocaleLowerCase();
+    const items=G.quickRows.map((r,i)=>({r,i})).filter(({r})=>(filter==='all'||r.state.goal===filter)&&(!term||[r.method,r.purpose,r.setting,r.check].join(' ').toLocaleLowerCase().includes(term)));
+    $('table-caption').textContent=`${items.length}件の手法・選択肢`;
+    $('quick-rows').innerHTML=items.length?items.map(({r,i})=>`<tr><td>${h(r.purpose)}</td><td>${h(r.setting)}</td><td>${h(r.method)}</td><td>${h(r.check)}</td><td><button type="button" class="table-detail" data-preset="${i}" aria-label="${h(r.method)}を詳しく見る">詳しく →</button></td></tr>`).join(''):'<tr><td class="no-results" colspan="5">該当する項目がありません。別の言葉で検索してください。</td></tr>';
+  }
+
+  function renderStatic() {
+    $('examples').innerHTML=G.examples.map((e,i)=>`<button type="button" class="example-chip" data-example="${i}">${h(e.label)}${icons.arrow}</button>`).join('');
+    $('all-sources').innerHTML=G.sources.map((s,i)=>`<div class="source-item"><span class="source-index">${String(i+1).padStart(2,'0')}</span><a href="${h(s.url)}" target="_blank" rel="noopener noreferrer">${h(s.title)} ↗</a>${s.note?`<p>${h(s.note)}</p>`:''}</div>`).join('');
+  }
+
+  function resultText() {
+    if(!currentResult) return '';
+    const r=currentResult;
+    const conditions=[goals.get(state.goal)?.label,...G.questionsFor(state).map(q=>selectedOption(q)?.label)].filter(Boolean);
+    const lines=['統計手法ナビ',conditions.join(' / '),'',`候補：${r.title}`,r.reason,''];
+    if(r.candidates?.length){for(const c of r.candidates)lines.push(`${c.title}：${c.text}`);lines.push('');}
+    lines.push('確認すること');
+    r.checks.forEach((c,i)=>lines.push(`${i+1}. ${c.label}：${c.text}`));
+    lines.push('',`結果に添える指標：${r.report}`,'',`症例数の考え方：${r.sample}`);
+    if(r.alternative)lines.push('',`条件によっては：${r.alternative.title}`,r.alternative.text);
+    for(const d of r.details||[])lines.push('',`${d.label}：${d.text}`);
+    lines.push('','参考資料');
+    for(const id of r.sources||[]){const s=sourceMap.get(id);if(s)lines.push(`${s.title}\n${s.url}`);}
+    return lines.join('\n');
+  }
+
+  async function copyResult() {
+    const text=resultText(); if(!text)return;
+    try{await navigator.clipboard.writeText(text);toast('候補・確認事項・出典をコピーしました。');}
+    catch{
+      const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.append(area);area.select();
+      const ok=document.execCommand('copy');area.remove();toast(ok?'候補・確認事項・出典をコピーしました。':'コピーできませんでした。印刷する機能もご利用いただけます。');
+    }
+  }
+
+  async function downloadApp() {
+    let html;
+    try{
+      if(location.protocol==='file:')throw new Error('local');
+      const response=await fetch(location.href.split('#')[0],{credentials:'same-origin'});
+      if(!response.ok)throw new Error('fetch');
+      html=await response.text();
+      if(!html.includes('window.StatGuide'))throw new Error('unexpected content');
+    }catch{
+      const copy=document.documentElement.cloneNode(true);
+      for(const panel of copy.querySelectorAll('[role="tabpanel"]'))panel.hidden=panel.id!=='panel-select';
+      for(const button of copy.querySelectorAll('[data-tab]')){
+        const selected=button.dataset.tab==='select';
+        button.classList.toggle('active',selected);button.setAttribute('aria-selected',String(selected));button.tabIndex=selected?0:-1;
+      }
+      html='<!doctype html>\n'+copy.outerHTML;
+    }
+    const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download='statistics-method-guide.html';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    toast('HTMLファイルの保存を開始しました。');
+  }
+
+  document.addEventListener('click',event=>{
+    const t=event.target instanceof Element?event.target:null;if(!t)return;
+    const goal=t.closest('[data-goal]');if(goal){state={goal:goal.dataset.goal};editingKey=null;renderGuide();if(innerWidth<=800)$('questions').scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});return;}
+    const help=t.closest('[data-help]');if(help){openAssumptions(help.dataset.help);return;}
+    if(t.closest('[data-return-to-guide]')){returnToGuide();return;}
+    const tab=t.closest('[data-tab]');if(tab){changeTab(tab.dataset.tab);return;}
+    const edit=t.closest('[data-edit]');if(edit){editingKey=edit.dataset.edit;renderQuestions();const input=$('questions').querySelector(`input[name="${editingKey}"]:checked`)||$('questions').querySelector(`input[name="${editingKey}"]`);input?.focus({preventScroll:true});return;}
+    const ex=t.closest('[data-example]');if(ex){usePreset(G.examples[Number(ex.dataset.example)].state);return;}
+    const preset=t.closest('[data-preset]');if(preset){usePreset(G.quickRows[Number(preset.dataset.preset)].state);return;}
+    const f=t.closest('[data-filter]');if(f){filter=f.dataset.filter;renderTable();$('table-filters').querySelector(`[data-filter="${filter}"]`)?.focus({preventScroll:true});return;}
+    if(t.closest('#copy-result')){copyResult();return;}
+    if(t.closest('#print-result')){window.print();return;}
+    if(t.closest('#download-app')){downloadApp();return;}
+    if(t.closest('#reset')){state={};editingKey=null;renderGuide();$('goal-heading').scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});return;}
+    if(t.closest('#mobile-result')){$('result-card')?.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});return;}
+    if(t.closest('.brand')){event.preventDefault();changeTab('select');return;}
+  });
+  document.addEventListener('change',event=>{const t=event.target;if(t instanceof HTMLInputElement&&t.matches('input[data-key]'))applyAnswer(t.dataset.key,t.value);});
+  $('table-search').addEventListener('input',event=>{query=event.target.value;renderTable();});
+  document.querySelector('.tabs').addEventListener('keydown',event=>{
+    let index=tabNames.indexOf(currentTab);
+    if(event.key==='ArrowRight')index=(index+1)%tabNames.length;else if(event.key==='ArrowLeft')index=(index+tabNames.length-1)%tabNames.length;else if(event.key==='Home')index=0;else if(event.key==='End')index=tabNames.length-1;else return;
+    event.preventDefault();changeTab(tabNames[index]);$('tab-'+tabNames[index]).focus();
+  });
+  window.addEventListener('hashchange',routeFromHash);
+  let printDetails=[];
+  window.addEventListener('beforeprint',()=>{
+    printDetails=Array.from($('panel-'+currentTab).querySelectorAll('details')).map(el=>({el,open:el.open}));
+    for(const item of printDetails)item.el.open=true;
+  });
+  window.addEventListener('afterprint',()=>{for(const item of printDetails)item.el.open=item.open;printDetails=[];});
+  renderStatic();renderGuide();
+  routeFromHash();
+  window.StatApp={getState:()=>({...state}),getResult:()=>currentResult,resultText,normalizePreset};
+})();
+</script>
+</body>
+</html>
